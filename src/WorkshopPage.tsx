@@ -43,9 +43,9 @@ export default function WorkshopPage() {
       <main>
         <section className="prep-hero">
           <div className="prep-hero-copy">
-            <p className="eyebrow">Barcelona · workshop workspace</p>
-            <h1>Settle the architecture.<br /><span>Prove it in the room.</span></h1>
-            <p>A focused workspace for the decisions, setup, and evidence used during the scored agentic sessions. Keep each claim tied to a reproducible test and source-side evidence.</p>
+            <p className="eyebrow">Barcelona · workshop preparation</p>
+            <h1>Settle the architecture.<br /><span>Then prove it.</span></h1>
+            <p>A focused workspace for the decisions, setup, and evidence needed before the scored agentic sessions. Keep the briefing narrative separate from the work required to make each claim defensible.</p>
           </div>
           <div className="prep-hero-meta">
             <div><span>Scope</span><strong>Hypotheses 21–26</strong></div>
@@ -56,14 +56,14 @@ export default function WorkshopPage() {
         </section>
 
         <section className="section prep-priorities">
-          <div><p className="eyebrow">Four proof priorities</p><h2>What must remain true throughout the session.</h2></div>
+          <div><p className="eyebrow">Four proof priorities</p><h2>What must be true before the room fills.</h2></div>
           <div className="priority-list">{priorities.map(([number, title, detail]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{detail}</p></article>)}</div>
         </section>
 
         <section className="section prep-plan">
           <div className="prep-plan-heading">
-            <div><p className="eyebrow">Evidence plan</p><h2>Eight decisions to close in the room.</h2></div>
-            <div className="prep-progress"><div><strong>{completed.length} of {actions.length} closed</strong><span>Track decisions as the workshop progresses.</span></div><span className="progress-track"><span style={{ width: `${completed.length / actions.length * 100}%` }} /></span></div>
+            <div><p className="eyebrow">Evidence plan</p><h2>Eight decisions before Barcelona.</h2></div>
+            <div className="prep-progress"><div><strong>{completed.length} of {actions.length} ready</strong><span>Mark each decision as it is closed.</span></div><span className="progress-track"><span style={{ width: `${completed.length / actions.length * 100}%` }} /></span></div>
           </div>
           <div className="prep-checklist">{actions.map(([title, detail], index) => <article className={completed.includes(index) ? 'is-complete' : ''} key={title}><button type="button" onClick={() => toggleAction(index)} aria-pressed={completed.includes(index)} aria-label={`${completed.includes(index) ? 'Reopen' : 'Complete'} ${title}`}>{completed.includes(index) ? <Check size={17} /> : String(index + 1).padStart(2, '0')}</button><div><h3>{title}</h3><p>{detail}</p></div></article>)}</div>
         </section>
@@ -89,7 +89,7 @@ export default function WorkshopPage() {
 
         <section className="closing"><ShieldCheck size={24} /><div><p className="eyebrow">Exit criterion</p><blockquote>Every claimed pass has a named user, a traceable identity path, a source-side decision, and reproducible evidence.</blockquote></div></section>
       </main>
-      <footer><span>DataLand · Round 2 workshop workspace</span><a href="./index.html">Return to architecture briefing</a></footer>
+      <footer><span>DataLand · Round 2 preparation</span><a href="./index.html">Return to architecture briefing</a></footer>
     </div>
   )
 }

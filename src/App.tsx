@@ -329,10 +329,10 @@ function App() {
 
         <section className="section prep-handoff" id="actions">
           <div>
-            <p className="eyebrow">Workshop workspace</p>
-            <h2>Use the evidence plan live in the room.</h2>
+            <p className="eyebrow">Workshop preparation</p>
+            <h2>Take the evidence plan into a focused workspace.</h2>
           </div>
-          <p>The separate workshop page holds the live decision tracker, proof priorities, and an official Microsoft Foundry hosted-agent repository for the working session.</p>
+          <p>The architecture brief ends here. The separate preparation page holds the eight decisions, proof priorities, and an official Microsoft Foundry hosted-agent repository for the workshop build.</p>
           <div className="handoff-actions"><a className="button primary" href="./workshop.html">Open workshop prep <ArrowRight size={17} /></a><a className="scenario-link" href="./fabric-foundry.html">View Fabric + Foundry scenario</a></div>
         </section>
 
