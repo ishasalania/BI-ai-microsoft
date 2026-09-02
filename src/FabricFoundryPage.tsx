@@ -76,7 +76,7 @@ export default function FabricFoundryPage() {
         </section>
 
         <section className="section scenario-boundaries">
-          <div><p className="eyebrow">PoC guardrails</p><h2>Five boundaries to state before the demo.</h2></div>
+          <div><p className="eyebrow">PoC guardrails</p><h2>Five boundaries to keep explicit in the demo.</h2></div>
           <div className="boundary-grid">
             <article><strong>Identity</strong><p>User authentication is required. Service principal authentication is not supported for this Fabric Data Agent integration.</p></article>
             <article><strong>Tenant and region</strong><p>The Foundry project and Fabric agent must share a tenant. The Fabric agent and its data sources need aligned capacity regions.</p></article>
