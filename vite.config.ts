@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         main: 'index.html',
         workshop: 'workshop.html',
+        fabricFoundry: 'fabric-foundry.html',
       },
     },
   },

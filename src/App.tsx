@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react'
 import {
   ArrowRight, BadgeCheck, BookOpen, Boxes, CalendarDays, Check, ChevronDown,
   CircleAlert, ExternalLink, Fingerprint, GitBranch, KeyRound, LockKeyhole,
-  Route, ShieldCheck, Users, MapPin, Database, FileWarning,
+  Route, ShieldCheck, Users, MapPin, Database,
 } from 'lucide-react'
 import './App.css'
 
@@ -90,7 +90,7 @@ const releaseReadiness = [
 
 const tests = [
   { id: 21, title: 'Conversational analytics enforcement', state: 'Prove', surface: 'Copilot in Power BI · signed-in user', evidence: 'R1 inconclusive · achievable natively', note: 'Zero row, column or label violations across 20 fixed questions. This is the deliberate control for #24.', offering: 'Power BI Copilot over the governed semantic model, with DirectQuery and Snowflake SSO where identity must reach the source. Import mode is not the answer.' },
-  { id: 22, title: 'Structured-data agent security', state: 'Knockout', surface: 'Fabric Data Agent · governed semantic model', evidence: 'R1 failed · Microsoft challenges the result', note: 'Zero bypass. Entra OBO is mandatory; a service principal is an automatic fail. Attempt Snowflake direct, not Databricks.', offering: 'Fabric Data Agent constrained to Fabric-mediated tools, backed by a governed semantic model and Snowflake DirectQuery SSO. Prove user context before the demo starts.' },
+  { id: 22, title: 'Structured-data agent security', state: 'Critical', surface: 'Fabric Data Agent · governed semantic model', evidence: 'R1 failed · Microsoft challenges the result', note: 'Zero bypass. Entra OBO is mandatory; a service principal is an automatic fail. Attempt Snowflake direct, not Databricks.', offering: 'Fabric Data Agent constrained to Fabric-mediated tools, backed by a governed semantic model and Snowflake DirectQuery SSO. Prove user context before the demo starts.' },
   { id: 23, title: 'Document permissions and labels', state: 'Prove', surface: 'OneLake / SharePoint · Azure AI Search', evidence: 'R1 inconclusive · achievable natively', note: 'Zero unauthorized disclosure. Security trimming must happen at query time under delegated Entra identity.', offering: 'Purview-enabled Azure AI Search with query-time label enforcement and delegated Entra tokens. Use Copilot Studio or Foundry only when the end-user token reaches Search.' },
   { id: 24, title: 'Full chain over virtualized data', state: 'Resolve', surface: 'Snowflake DirectQuery · SSO', evidence: 'Architecture conflict to resolve', note: 'Run the same 20 questions as #21. If #21 passes and this fails, virtualization is the fault line.', offering: 'Fabric semantic model with Snowflake DirectQuery and SSO, consumed by Power BI Copilot or Fabric Data Agent. OneLake shortcuts cannot enforce source identity end to end.' },
   { id: 25, title: 'External sources through MCP', state: 'Resolve', surface: 'Copilot Studio + AI Foundry · real source', evidence: 'Microsoft and customer scope conflict', note: 'Must read real Snowflake data without OneLake materialization. A connection walkthrough does not test the hypothesis.', offering: 'Native MCP connectivity in both Copilot Studio and Foundry, tested against the live Snowflake MCP server. Microsoft Agent Framework is the pro-code Foundry-only extension path.' },
@@ -185,7 +185,7 @@ function App() {
         <section className="fact-strip" aria-label="Briefing facts">
           <div><span>Agent 365 status</span><strong>Outside the 27 hypotheses</strong></div>
           <div><span>Critical proof</span><strong>#22 · zero bypass</strong></div>
-          <div><span>Owned tests</span><strong>21 through 26</strong></div>
+          <div><span>Agentic scope</span><strong>Hypotheses 21 through 26</strong></div>
           <div><span>Non-negotiable</span><strong>No service principal</strong></div>
         </section>
 
@@ -218,10 +218,9 @@ function App() {
           </div>
           <div className="workshop-grid">
             <article><span className="context-icon"><MapPin /></span><p className="kicker">Barcelona · 8–10 Sep</p><h3>Workshop 1</h3><p>Data Foundation deep dive. Use the week to settle architecture, surfaces, identity flows and evidence readiness.</p></article>
-            <article><span className="context-icon"><Users /></span><p className="kicker">Your side of the table</p><h3>Isha · tests 21–26</h3><p>AI and agents specialist. Data Foundation and Governance remain with Cem Coban and Alexey Khalyako.</p></article>
-            <article><span className="context-icon"><CalendarDays /></span><p className="kicker">Ingelheim · Workshop 2</p><h3>Scored agentic sessions</h3><p>Owned by Yingding Wang, Cem Coban and Yasmin Sarbaoui. Prepare evidence now; do not imply it is being scored in Barcelona.</p></article>
+            <article><span className="context-icon"><Users /></span><p className="kicker">AI and agent focus</p><h3>Hypotheses 21–26</h3><p>Conversational analytics, structured-data agents, document permissions, virtualization, MCP connectivity and per-user identity.</p></article>
+            <article><span className="context-icon"><CalendarDays /></span><p className="kicker">Ingelheim · Workshop 2</p><h3>Scored agentic sessions</h3><p>Use the Barcelona design discussion to align the architecture and prepare reproducible evidence for the scored sessions.</p></article>
           </div>
-          <div className="travel-alert"><CircleAlert /><p><strong>Schedule conflict:</strong> the workshop closes Thursday 10 September at 16:00. The Barcelona–Cologne flight leaves Wednesday 9 September at 20:50. Either the flight or the expectation must change.</p></div>
         </section>
 
         <section className="section position" id="position">
@@ -311,7 +310,7 @@ function App() {
 
         <section className="section tests" id="tests">
           <div className="section-heading row-heading">
-            <div><p className="eyebrow">Your scored surface</p><h2>Six hypotheses. Identity is the common control.</h2></div>
+            <div><p className="eyebrow">Round 2 scored surface</p><h2>Six hypotheses. Identity is the common control.</h2></div>
             <button className="text-button" type="button" onClick={() => setExpanded(!expanded)} aria-expanded={expanded}>{expanded ? 'Condense view' : 'Show test detail'} <ChevronDown className={expanded ? 'rotate' : ''} size={17} /></button>
           </div>
           <div className="test-legend"><span>Hypothesis</span><span>Threshold, evidence and Microsoft response</span><span>Status</span></div>
@@ -320,13 +319,12 @@ function App() {
         </section>
 
         <section className="section claims" id="claims">
-          <div className="section-heading"><p className="eyebrow">Claim discipline</p><h2>Say what is verified. Flag what is not.</h2><p>This customer formally rebutted Round 1 when results were reframed. Precision is part of the governance posture.</p></div>
+          <div className="section-heading"><p className="eyebrow">Claim discipline</p><h2>Say what is verified. Flag what is not.</h2><p>Round 1 showed why every conclusion needs an agreed test, source evidence and precise wording. Precision is part of the governance posture.</p></div>
           <div className="claims-grid">
             <article className="claim-confirmed"><span>Confirmed</span><h3>Governance gaps are real</h3><p>Collibra–Purview is “not achievable natively” for #5 and #6. All agentic hypotheses score security, permissions and governance, not answer quality.</p></article>
             <article className="claim-corrected"><span>Corrected</span><h3>Shortcuts do not carry identity</h3><p>For whole-path enforcement, Microsoft’s recorded answer is Snowflake Direct Query with SSO. That conflicts with the zero-copy shortcut architecture.</p></article>
-            <article className="claim-unverified"><span>Confirm before repeating</span><h3>Uncorroborated details</h3><p>20k data products; Ralph and Till Egers; Martin’s title; Apollo LAN gateway; AWS Glue as a scoped source; and “ISD is in lead.”</p></article>
+            <article className="claim-unverified"><span>Evidence standard</span><h3>Document the exact path</h3><p>Record the user, surface, connector, token path, source-side authorization decision and result for every claimed pass or failure.</p></article>
           </div>
-          <div className="protected-note"><FileWarning /><p><strong>Missing source:</strong> “Status on AI Use Case – Topics.loop” is protected. Ask Marcel Franke for its contents before travel.</p></div>
         </section>
 
         <section className="section prep-handoff" id="actions">
@@ -335,7 +333,7 @@ function App() {
             <h2>Take the evidence plan into a focused workspace.</h2>
           </div>
           <p>The architecture brief ends here. The separate preparation page holds the eight decisions, proof priorities, and an official Microsoft Foundry hosted-agent repository for the workshop build.</p>
-          <a className="button primary" href="./workshop.html">Open workshop prep <ArrowRight size={17} /></a>
+          <div className="handoff-actions"><a className="button primary" href="./workshop.html">Open workshop prep <ArrowRight size={17} /></a><a className="scenario-link" href="./fabric-foundry.html">View Fabric + Foundry scenario</a></div>
         </section>
 
         <section className="closing"><BookOpen size={24} /><div><p className="eyebrow">Recommended opening line</p><blockquote>“We are not here to demo another agent. We are here to show how every agent is known, constrained, attributable and authorized all the way to the data.”</blockquote></div></section>

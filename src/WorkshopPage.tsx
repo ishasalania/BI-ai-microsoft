@@ -1,4 +1,5 @@
-import { ArrowLeft, ArrowUpRight, CalendarDays, ExternalLink, GitBranch, ShieldCheck } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, CalendarDays, Check, ExternalLink, GitBranch, ShieldCheck } from 'lucide-react'
+import { useState } from 'react'
 import './index.css'
 import './App.css'
 
@@ -11,16 +12,22 @@ const priorities = [
 
 const actions = [
   ['Pre-test token pass-through', 'Prove OAuth 2.1 and OBO in Copilot Studio and Foundry. If identity cannot pass, #26 fails regardless of the MCP server.'],
-  ['Rehearse the knockout', 'Confirm Fabric Data Agent runs as the signed-in user, then attempt direct-to-Snowflake bypass. Do not substitute Databricks.'],
-  ['Resolve shortcuts versus SSO', 'Raise the #24 conflict on Day 1. Shortcuts do not enforce source identity end to end; Snowflake DirectQuery with SSO changes the zero-copy story.'],
+  ['Validate the zero-bypass condition', 'Confirm Fabric Data Agent runs as the signed-in user, then attempt direct-to-Snowflake bypass. Do not substitute Databricks.'],
+  ['Resolve shortcuts versus SSO', 'Resolve the #24 architecture choice. Shortcuts do not enforce source identity end to end; Snowflake DirectQuery with SSO changes the zero-copy story.'],
   ['Agree the MCP evidence', 'Settle whether #25 includes real Snowflake data. Record the source query, caller identity, response, and denial behavior.'],
   ['Name the extraction path', 'Document how docx, pptx, odt, and scanned files are extracted. Settle OneLake versus labelled SharePoint for #23.'],
-  ['Prepare the Agent 365 position', 'Cover non-Microsoft registry depth, Agent SDK versus Graph API, tenant entitlement, and coexistence with ServiceNow.'],
-  ['Chase SETUP-0', 'Name the Fabric capacity, SKU, licences, tenant owner, tenant lifetime, participant accounts, and Entra federation.'],
-  ['Obtain the 20-question set', 'SETUP-A must exist before the run. Three of the six hypotheses depend on it and cannot be scored without it.'],
+  ['Define the Agent 365 scope', 'Cover non-Microsoft registry depth, Agent SDK versus Graph API, tenant entitlement, and coexistence with ServiceNow.'],
+  ['Confirm SETUP-0', 'Name the Fabric capacity, SKU, licences, tenant owner, tenant lifetime, participant accounts, and Entra federation.'],
+  ['Confirm the 20-question set', 'SETUP-A must exist before the run. Three of the six hypotheses depend on it and cannot be scored without it.'],
 ]
 
 export default function WorkshopPage() {
+  const [completed, setCompleted] = useState<number[]>([])
+
+  function toggleAction(index: number) {
+    setCompleted((current) => current.includes(index) ? current.filter((item) => item !== index) : [...current, index])
+  }
+
   return (
     <div className="workshop-page">
       <header className="topbar workshop-topbar">
@@ -41,7 +48,7 @@ export default function WorkshopPage() {
             <p>A focused workspace for the decisions, setup, and evidence needed before the scored agentic sessions. Keep the briefing narrative separate from the work required to make each claim defensible.</p>
           </div>
           <div className="prep-hero-meta">
-            <div><span>Owner</span><strong>Isha · tests 21–26</strong></div>
+            <div><span>Scope</span><strong>Hypotheses 21–26</strong></div>
             <div><span>Critical proof</span><strong>#22 · zero bypass</strong></div>
             <div><span>Required setup</span><strong>SETUP-0 + SETUP-A</strong></div>
             <div><span>Evidence rule</span><strong>Identity at the source</strong></div>
@@ -56,9 +63,9 @@ export default function WorkshopPage() {
         <section className="section prep-plan">
           <div className="prep-plan-heading">
             <div><p className="eyebrow">Evidence plan</p><h2>Eight decisions before Barcelona.</h2></div>
-            <p>Close these in order of test risk. Identity and source-access failures invalidate the later demonstrations, so they come first.</p>
+            <div className="prep-progress"><div><strong>{completed.length} of {actions.length} ready</strong><span>Mark each decision as it is closed.</span></div><span className="progress-track"><span style={{ width: `${completed.length / actions.length * 100}%` }} /></span></div>
           </div>
-          <div className="prep-checklist">{actions.map(([title, detail], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{detail}</p></div></article>)}</div>
+          <div className="prep-checklist">{actions.map(([title, detail], index) => <article className={completed.includes(index) ? 'is-complete' : ''} key={title}><button type="button" onClick={() => toggleAction(index)} aria-pressed={completed.includes(index)} aria-label={`${completed.includes(index) ? 'Reopen' : 'Complete'} ${title}`}>{completed.includes(index) ? <Check size={17} /> : String(index + 1).padStart(2, '0')}</button><div><h3>{title}</h3><p>{detail}</p></div></article>)}</div>
         </section>
 
         <section className="section prep-resources">
@@ -73,6 +80,7 @@ export default function WorkshopPage() {
             <span className="repo-open">Open repository <ArrowUpRight size={17} /></span>
           </a>
           <div className="resource-links">
+            <a href="./fabric-foundry.html">OneLake + Foundry test scenario <ArrowUpRight size={14} /></a>
             <a href="https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/python/hosted-agents/agent-framework/responses/01-basic" target="_blank" rel="noreferrer">Basic Python agent <ExternalLink size={14} /></a>
             <a href="https://learn.microsoft.com/en-us/azure/foundry/agents/quickstarts/quickstart-hosted-agent" target="_blank" rel="noreferrer">Hosted-agent quickstart <ExternalLink size={14} /></a>
             <a href="https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/csharp/hosted-agents" target="_blank" rel="noreferrer">Official .NET samples <ExternalLink size={14} /></a>
