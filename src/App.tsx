@@ -170,7 +170,7 @@ function App() {
             <p className="lede">A design-discussion brief for governing agents across Microsoft and third-party estates, with APIM at runtime and Agent 365 as the management conversation.</p>
             <div className="hero-actions">
               <a className="button primary" href="#position">Open the position <ArrowRight size={17} /></a>
-              <a className="button secondary" href="./workshop.html">Open workshop prep</a>
+              <a className="button secondary" href="#actions">See open decisions</a>
             </div>
           </div>
           <div className="hero-visual" aria-label="Governance layers diagram">
