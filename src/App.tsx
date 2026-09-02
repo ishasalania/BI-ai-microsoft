@@ -157,7 +157,7 @@ function App() {
         </a>
         <nav aria-label="Page sections">
           <a href="#workshop">Workshop</a><a href="#position">Position</a><a href="#security">Security proof</a>
-          <a href="#readiness">GA vs preview</a><a href="#tests">Tests 21–26</a><a href="#actions">Actions</a>
+          <a href="#readiness">GA vs preview</a><a href="#tests">Tests 21–26</a><a href="./workshop.html">Workshop prep</a>
         </nav>
         <span className="date-pill"><CalendarDays size={15} /> 8–10 Sep</span>
       </header>
@@ -170,7 +170,7 @@ function App() {
             <p className="lede">A design-discussion brief for governing agents across Microsoft and third-party estates, with APIM at runtime and Agent 365 as the management conversation.</p>
             <div className="hero-actions">
               <a className="button primary" href="#position">Open the position <ArrowRight size={17} /></a>
-              <a className="button secondary" href="#actions">See open decisions</a>
+              <a className="button secondary" href="./workshop.html">Open workshop prep</a>
             </div>
           </div>
           <div className="hero-visual" aria-label="Governance layers diagram">
@@ -329,18 +329,13 @@ function App() {
           <div className="protected-note"><FileWarning /><p><strong>Missing source:</strong> “Status on AI Use Case – Topics.loop” is protected. Ask Marcel Franke for its contents before travel.</p></div>
         </section>
 
-        <section className="section actions" id="actions">
-          <div className="action-copy"><p className="eyebrow">Before Barcelona</p><h2>Settle the architecture before it becomes demo theatre.</h2><p>These are the decisions that materially change the evidence plan.</p></div>
-          <div className="checklist">
-            <article><span>01</span><div><h3>Pre-test token pass-through</h3><p>Prove OAuth 2.1 / OBO in both Copilot Studio and Foundry. If identity cannot pass, #26 fails regardless of the MCP server.</p></div></article>
-            <article><span>02</span><div><h3>Rehearse the knockout</h3><p>Confirm Fabric Data Agent runs as the signed-in user, then attempt the direct-to-Snowflake bypass. Do not substitute Databricks and create a false pass.</p></div></article>
-            <article><span>03</span><div><h3>Resolve shortcuts versus SSO</h3><p>Raise the #24 conflict on Day 1: storage-layer shortcuts do not enforce user identity end to end; Snowflake Direct Query with SSO changes the zero-copy story.</p></div></article>
-            <article><span>04</span><div><h3>Agree the MCP evidence</h3><p>Settle whether #25 includes real Snowflake data. A server connection walkthrough does not satisfy the customer hypothesis.</p></div></article>
-            <article><span>05</span><div><h3>Name the extraction path</h3><p>Answer how docx, pptx, odt and scanned documents are extracted, and settle OneLake versus labelled SharePoint for #23.</p></div></article>
-            <article><span>06</span><div><h3>Prepare the Agent 365 position</h3><p>Cover non-Microsoft registry depth, Agent SDK versus Graph API calls, and coexistence with ServiceNow.</p></div></article>
-            <article><span>07</span><div><h3>Chase SETUP-0</h3><p>Name the Fabric capacity, SKU, licences, tenant owner, tenant lifetime, participant accounts and Entra federation.</p></div></article>
-            <article><span>08</span><div><h3>Obtain the 20-question set</h3><p>SETUP-A must exist before the run. Three of your six hypotheses depend on it and cannot be scored without it.</p></div></article>
+        <section className="section prep-handoff" id="actions">
+          <div>
+            <p className="eyebrow">Workshop preparation</p>
+            <h2>Take the evidence plan into a focused workspace.</h2>
           </div>
+          <p>The architecture brief ends here. The separate preparation page holds the eight decisions, proof priorities, and an official Microsoft Foundry hosted-agent repository for the workshop build.</p>
+          <a className="button primary" href="./workshop.html">Open workshop prep <ArrowRight size={17} /></a>
         </section>
 
         <section className="closing"><BookOpen size={24} /><div><p className="eyebrow">Recommended opening line</p><blockquote>“We are not here to demo another agent. We are here to show how every agent is known, constrained, attributable and authorized all the way to the data.”</blockquote></div></section>
