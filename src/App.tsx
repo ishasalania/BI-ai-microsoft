@@ -13,6 +13,81 @@ const sources = [
   ['Foundry Azure AI Search tool', 'https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/ai-search'],
 ]
 
+const releaseReadiness = [
+  {
+    name: 'Fabric Data Agent',
+    status: 'GA',
+    hypotheses: '#22',
+    claim: 'The core Fabric Data Agent is generally available and uses the requesting user’s credentials. RLS and CLS on Power BI semantic models still apply.',
+    caveat: 'Some Purview governance controls for agent interactions and Fabric access restriction policies remain preview.',
+    href: 'https://learn.microsoft.com/en-us/fabric/data-science/concept-data-agent',
+  },
+  {
+    name: 'Copilot in Power BI',
+    status: 'Mixed',
+    hypotheses: '#21, #24',
+    claim: 'The report-scoped Copilot pane is generally available.',
+    caveat: 'Standalone Copilot and app-scoped Copilot are preview. Use the report pane for a GA-aligned #21 test surface.',
+    href: 'https://learn.microsoft.com/en-us/power-bi/create-reports/copilot-introduction',
+  },
+  {
+    name: 'Snowflake DirectQuery and Entra SSO',
+    status: 'GA',
+    hypotheses: '#21, #22, #24',
+    claim: 'The Snowflake connector is generally available. DirectQuery and Microsoft Entra authentication are supported.',
+    caveat: 'Microsoft Entra SSO only works with DirectQuery. Import mode does not preserve the end user’s source identity.',
+    href: 'https://learn.microsoft.com/en-us/power-query/connectors/snowflake',
+  },
+  {
+    name: 'Purview labels in Azure AI Search',
+    status: 'Preview',
+    hypotheses: '#23',
+    claim: 'Sensitivity label extraction and query-time policy enforcement are available through preview REST APIs.',
+    caveat: 'No production SLA. It requires a system-assigned managed identity, privileged Purview roles, RBAC queries, and same-tenant users.',
+    href: 'https://learn.microsoft.com/en-us/azure/search/search-indexer-sensitivity-labels',
+  },
+  {
+    name: 'Foundry MCP and OAuth passthrough',
+    status: 'Verify',
+    hypotheses: '#25, #26',
+    claim: 'Current Foundry documentation supports remote MCP, OAuth identity passthrough, user Entra tokens, and server-side authorization.',
+    caveat: 'Do not convert documentation into a pass. Pre-test Snowflake with two users and prove that a server-side 403 remains a denial.',
+    href: 'https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/mcp-authentication',
+  },
+  {
+    name: 'Copilot Studio MCP and OAuth',
+    status: 'Verify',
+    hypotheses: '#25, #26',
+    claim: 'Copilot Studio documents native MCP onboarding with API key or OAuth 2.0 authentication and per-user consent.',
+    caveat: 'The workbook requires parity with Foundry. Validate the actual Snowflake server, transport, scopes, denial path, and tenant rollout.',
+    href: 'https://learn.microsoft.com/en-us/microsoft-copilot-studio/mcp-add-existing-server-to-agent',
+  },
+  {
+    name: 'Microsoft Agent Framework',
+    status: 'Mixed',
+    hypotheses: '#25, #26',
+    claim: 'The framework is documented for Python, .NET, and Go and integrates with Foundry hosted agents.',
+    caveat: 'Maturity varies by language and package. The Foundry .NET package uses prerelease installation, and Go is explicitly public preview. It does not deploy to Copilot Studio.',
+    href: 'https://learn.microsoft.com/en-us/agent-framework/overview/',
+  },
+  {
+    name: 'APIM AI gateway',
+    status: 'Mixed',
+    hypotheses: 'Governance layer',
+    claim: 'Core APIM gateway controls cover authentication, quotas, routing, monitoring, model APIs, and MCP traffic.',
+    caveat: 'The AI gateway experience inside Foundry and the unified model API are preview. Evaluate each policy and tier, not the umbrella name.',
+    href: 'https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities',
+  },
+  {
+    name: 'Agent 365',
+    status: 'Frontier',
+    hypotheses: 'Design discussion only',
+    claim: 'Treat Agent 365 as the management-plane architecture discussion requested by the customer, not as one of the 27 scored hypotheses.',
+    caveat: 'Public Foundry documentation states that Agent 365 MCP servers are limited to Frontier tenants. Confirm tenant entitlement and exact registry depth before making availability claims.',
+    href: 'https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/mcp-authentication',
+  },
+]
+
 const tests = [
   { id: 21, title: 'Conversational analytics enforcement', state: 'Prove', surface: 'Copilot in Power BI · signed-in user', evidence: 'R1 inconclusive · achievable natively', note: 'Zero row, column or label violations across 20 fixed questions. This is the deliberate control for #24.', offering: 'Power BI Copilot over the governed semantic model, with DirectQuery and Snowflake SSO where identity must reach the source. Import mode is not the answer.' },
   { id: 22, title: 'Structured-data agent security', state: 'Knockout', surface: 'Fabric Data Agent · governed semantic model', evidence: 'R1 failed · Microsoft challenges the result', note: 'Zero bypass. Entra OBO is mandatory; a service principal is an automatic fail. Attempt Snowflake direct, not Databricks.', offering: 'Fabric Data Agent constrained to Fabric-mediated tools, backed by a governed semantic model and Snowflake DirectQuery SSO. Prove user context before the demo starts.' },
@@ -82,7 +157,7 @@ function App() {
         </a>
         <nav aria-label="Page sections">
           <a href="#workshop">Workshop</a><a href="#position">Position</a><a href="#security">Security proof</a>
-          <a href="#tests">Tests 21–26</a><a href="#actions">Actions</a>
+          <a href="#readiness">GA vs preview</a><a href="#tests">Tests 21–26</a><a href="#actions">Actions</a>
         </nav>
         <span className="date-pill"><CalendarDays size={15} /> 8–10 Sep</span>
       </header>
@@ -202,6 +277,36 @@ function App() {
           </div>
           <div className="warning"><CircleAlert /><p><strong>The failure mode:</strong> a standard Foundry Search connection normally uses the project managed identity or an API key. The project identity grants application access; it does not represent the end user. Without OBO or label-aware Foundry IQ retrieval, labeled documents are omitted. If decrypted content is copied into an ordinary index, the original Purview label no longer protects that copy.</p></div>
           <div className="source-list"><span>Microsoft sources</span>{sources.map(([label, href]) => <a href={href} target="_blank" rel="noreferrer" key={href}>{label}<ExternalLink size={14} /></a>)}</div>
+        </section>
+
+        <section className="section readiness" id="readiness">
+          <div className="readiness-heading">
+            <div>
+              <p className="eyebrow">Release readiness · checked 2 Sep 2026</p>
+              <h2>GA is not inherited by every feature inside a product.</h2>
+            </div>
+            <div className="status-definitions">
+              <p><span className="readiness-dot dot-ga" /><strong>GA</strong> Supported production capability.</p>
+              <p><span className="readiness-dot dot-preview" /><strong>Preview</strong> No production SLA; behavior can change.</p>
+              <p><span className="readiness-dot dot-mixed" /><strong>Mixed</strong> GA core with preview subfeatures.</p>
+              <p><span className="readiness-dot dot-verify" /><strong>Verify</strong> Documented, but the exact PoC path still needs proof.</p>
+            </div>
+          </div>
+          <div className="readiness-rule">
+            <ShieldCheck />
+            <p><strong>Customer-safe rule:</strong> classify the exact surface, identity flow, connector, API version, and policy used in the test. Never describe a preview enforcement feature as GA because the parent product is GA.</p>
+          </div>
+          <div className="readiness-table" role="table" aria-label="Microsoft capability release readiness">
+            <div className="readiness-row readiness-header" role="row"><span>Capability</span><span>Status</span><span>What we can say</span><span>Boundary for the PoC</span></div>
+            {releaseReadiness.map((item) => (
+              <a className="readiness-row" href={item.href} target="_blank" rel="noreferrer" role="row" key={item.name}>
+                <span className="readiness-name"><strong>{item.name}</strong><small>{item.hypotheses}</small></span>
+                <span><b className={`release-status release-${item.status.toLowerCase()}`}>{item.status}</b></span>
+                <span>{item.claim}</span>
+                <span className="readiness-caveat">{item.caveat}<ExternalLink size={13} /></span>
+              </a>
+            ))}
+          </div>
         </section>
 
         <section className="section tests" id="tests">
