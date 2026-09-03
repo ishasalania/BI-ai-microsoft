@@ -3,6 +3,7 @@ import {
   Fingerprint, GitBranch, Route, ShieldCheck,
 } from 'lucide-react'
 import './App.css'
+import PageNav from './PageNav'
 
 const workstreams = [
   {
@@ -74,9 +75,7 @@ function App() {
           <span className="microsoft-logo"><img src={`${import.meta.env.BASE_URL}microsoft-mark.svg`} alt="" /><strong>Microsoft</strong></span>
           <span className="partner-label">Med Data, AI &amp; Systems</span>
         </a>
-        <nav aria-label="Page sections">
-          <a href="#architecture">Architecture</a><a href="#evidence">Evidence map</a><a href="#workstreams">Workstreams</a><a href="#position">Governance</a>
-        </nav>
+        <PageNav current="home" />
         <span className="date-pill"><CalendarDays size={15} /> 8–10 Sep</span>
       </header>
 

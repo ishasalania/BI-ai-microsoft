@@ -1,6 +1,7 @@
-import { ArrowRight, ArrowUpRight, Bot, CalendarDays, Database, ExternalLink, FileCheck2, FlaskConical, GitBranch, House, KeyRound, Layers3, ShieldCheck, Wrench } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Bot, CalendarDays, Database, ExternalLink, FileCheck2, FlaskConical, GitBranch, KeyRound, Layers3, ShieldCheck, Wrench } from 'lucide-react'
 import './index.css'
 import './App.css'
+import PageNav from './PageNav'
 
 const testSteps = [
   ['01', 'Prepare the Iceberg test object', 'Use the Round 2 zero-copy path: expose the external Apache Iceberg table through a OneLake shortcut and a governed semantic or query layer. Mirroring creates a copy; DirectQuery is a fallback but does not clear the Iceberg hypothesis.'],
@@ -40,7 +41,7 @@ export default function FabricFoundryPage() {
           <span className="logo-divider" />
           <span className="microsoft-logo"><img src={`${import.meta.env.BASE_URL}microsoft-mark.svg`} alt="" /><strong>Microsoft</strong></span>
         </a>
-        <a className="workshop-back" href="./index.html"><House size={16} /> Home</a>
+        <PageNav current="fabric" />
         <span className="date-pill"><CalendarDays size={15} /> Scenario 22</span>
       </header>
 

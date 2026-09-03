@@ -1,6 +1,7 @@
-import { ArrowRight, ArrowUpRight, Bot, Boxes, Database, GitBranch, House, KeyRound, MonitorCheck, ShieldCheck } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Bot, Boxes, Database, GitBranch, KeyRound, MonitorCheck, ShieldCheck } from 'lucide-react'
 import './index.css'
 import './App.css'
+import PageNav from './PageNav'
 
 const proofSteps = [
   ['01', 'Host the agent', 'Deploy Agent Framework code to Microsoft Foundry Agent Service with the Responses protocol and a managed endpoint.'],
@@ -65,7 +66,7 @@ export default function HostedAgentsPage() {
   return <div className="detail-page">
     <header className="topbar workshop-topbar">
       <a className="partner-logos" href="./index.html" aria-label="Return to agent governance"><img className="bi-logo" src={`${import.meta.env.BASE_URL}boehringer-ingelheim.svg`} alt="Boehringer Ingelheim" /><span className="logo-divider" /><span className="microsoft-logo"><img src={`${import.meta.env.BASE_URL}microsoft-mark.svg`} alt="" /><strong>Microsoft</strong></span></a>
-      <a className="workshop-back" href="./index.html"><House size={16} /> Home</a>
+      <PageNav current="hosted" />
       <span className="date-pill">Day 1 · Hosted agents</span>
     </header>
     <main>

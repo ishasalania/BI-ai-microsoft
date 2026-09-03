@@ -1,7 +1,8 @@
-import { ArrowUpRight, CalendarDays, Check, ExternalLink, GitBranch, House, ShieldCheck } from 'lucide-react'
+import { ArrowUpRight, CalendarDays, Check, ExternalLink, GitBranch, ShieldCheck } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import './index.css'
 import './App.css'
+import PageNav from './PageNav'
 
 const priorities = [
   ['01', 'Identity first', 'Prove OAuth and OBO with two users before any scored MCP demonstration.'],
@@ -66,7 +67,7 @@ export default function WorkshopPage() {
           <span className="logo-divider" />
           <span className="microsoft-logo"><img src={`${import.meta.env.BASE_URL}microsoft-mark.svg`} alt="" /><strong>Microsoft</strong></span>
         </a>
-        <a className="workshop-back" href="./index.html"><House size={16} /> Home</a>
+        <PageNav current="workshop" />
         <span className="date-pill"><CalendarDays size={15} /> 8–10 Sep</span>
       </header>
 
