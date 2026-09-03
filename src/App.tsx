@@ -147,15 +147,57 @@ function App() {
           <div><span>Strategy</span><strong>Coexist, do not replace</strong></div>
         </section>
 
-        <section className="section brief-overview" id="overview">
-          <div className="brief-overview-heading">
-            <div><p className="eyebrow">Executive position</p><h2>One ecosystem. Data stays governed where it lives.</h2></div>
-            <p>Microsoft services augment DataLand rather than replace it. Snowflake remains a system of record, Collibra remains the governance source of truth, and Microsoft adds interoperable analytics, agents, runtime controls and audit.</p>
+        <section className="section agenda-overview" id="workstreams">
+          <div className="agenda-overview-heading">
+            <div><p className="eyebrow">Three workstreams</p><h2>One governance position. Three focused paths.</h2></div>
+            <p>Start with the platform governance model, then open a dedicated page for each implementation workstream. The linked pages hold the architecture, deployment guidance, proof criteria and sources without crowding this briefing.</p>
           </div>
-          <div className="brief-overview-rows">
-            <article><span>01</span><h3>Why Round 2</h3><p>Round 1 assessed native capability. Round 2 tests interoperability: whether data can be discovered, read and governed across foundations without copying or weakening controls.</p></article>
-            <article><span>02</span><h3>Architecture rule</h3><p>Define governance once, enforce at every interaction, execute in an approved runtime, and leave final data authorization with the system that owns the source.</p></article>
-            <article><span>03</span><h3>Evidence rule</h3><p>Documentation is not a pass. Each claim needs a named path, persona, live test, source-side decision, trace and repeatable expected result.</p></article>
+          <div className="agenda-overview-grid">
+            {workstreams.map((item) => <a href={item.href} key={item.label}>
+              <span className="agenda-day-label"><CalendarDays size={16} />{item.label}</span>
+              <h3>{item.title}</h3><p>{item.detail}</p>
+              <small className="section-list-label">Sections inside</small>
+              <ol>{item.topics.map((topic, index) => <li key={topic}><span>{String(index + 1).padStart(2, '0')}</span>{topic}</li>)}</ol>
+              <strong>{item.action} <ArrowRight size={16} /></strong>
+            </a>)}
+          </div>
+
+          <div className="governance-cluster" id="position">
+            <div className="section-heading">
+              <p className="eyebrow">Enterprise governance model · Workstream 01</p>
+              <h2>Define trust. Enforce interactions. Execute under contract.</h2>
+              <p>Governance stays consistent when policy definition, live enforcement and workload execution have clear owners. Telemetry, evidence and revocation span all three planes.</p>
+            </div>
+            <div className="governance-plane-grid">
+              <a className="plane-card" href="https://learn.microsoft.com/en-us/microsoft-agent-365/overview" target="_blank" rel="noreferrer">
+                <div className="card-top"><span className="icon-box"><Boxes /></span><span className="status">Define</span></div>
+                <p className="kicker">Control plane</p><h3>Agent 365 + Foundry</h3>
+                <p>Register governed capabilities and define trust before runtime.</p>
+                <ul><li><Check /> Record purpose, owner, identity and scope</li><li><Check /> Declare tools, APIs and data dependencies</li><li><Check /> Track risk, version, evidence and lifecycle</li><li><CircleAlert /> Make revocation and exceptions explicit</li></ul>
+                <strong className="card-link">Open Agent 365 overview <ExternalLink size={14} /></strong>
+              </a>
+              <a className="plane-card apim-card" href="https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities" target="_blank" rel="noreferrer">
+                <div className="card-top"><span className="icon-box"><Route /></span><span className="status">Enforce</span></div>
+                <p className="kicker">Interaction plane</p><h3>APIM + source systems</h3>
+                <p>Evaluate each model, agent, tool and data interaction in context.</p>
+                <ul><li><Check /> Authenticate agent and requesting user</li><li><Check /> Apply safety, scope, rate and cost policies</li><li><Check /> Preserve delegated identity downstream</li><li><Check /> Keep RLS, CLS and denials at the source</li></ul>
+                <strong className="card-link">Open APIM AI gateway <ExternalLink size={14} /></strong>
+              </a>
+              <a className="plane-card runtime-card" href="./hosted-agents.html">
+                <div className="card-top"><span className="icon-box"><ShieldCheck /></span><span className="status">Execute</span></div>
+                <p className="kicker">Runtime plane</p><h3>Approved agent runtimes</h3>
+                <p>Run agents close to their domain while inheriting shared governance contracts.</p>
+                <ul><li><Check /> Isolate sessions, secrets and network access</li><li><Check /> Keep deployment configuration portable</li><li><Check /> Trace agents, tools, data and policy results</li><li><Check /> Gate releases with evaluation and rollback</li></ul>
+                <strong className="card-link">Open hosted runtime design <ArrowRight size={14} /></strong>
+              </a>
+            </div>
+            <div className="position-line"><GitBranch size={22} /><p><strong>Operating model:</strong> centralize identity, policy, registry and evidence by default; allow domain execution by exception only when it remains observable, reversible and connected to the same interaction controls.</p></div>
+          </div>
+
+          <div className="supporting-pages" aria-label="Supporting pages">
+            <span>Supporting pages</span>
+            <a href="./workshop.html"><strong>Workshop Prep</strong><small>Hypotheses, maturity, and twelve decisions</small><ArrowRight size={16} /></a>
+            <a href="./fabric-foundry.html"><strong>Fabric + Foundry Scenario</strong><small>Iceberg, labels, OneLake, and source authorization</small><ArrowRight size={16} /></a>
           </div>
         </section>
 
@@ -176,59 +218,6 @@ function App() {
             <div className="hypothesis-map-head" role="row"><span>Hypothesis</span><span>Test surface</span><span>Governed data path</span><span>Pass evidence</span></div>
             {agentHypotheses.map(([number, title, surface, dataPath, proof]) => <a href={`./workshop.html#hypothesis-${number}`} role="row" key={number}><span><strong>#{number}</strong><small>{title}</small></span><span>{surface}</span><span>{dataPath}</span><span>{proof}<ArrowRight size={15} /></span></a>)}
           </div>
-        </section>
-
-        <section className="section agenda-overview" id="workstreams">
-          <div className="agenda-overview-heading">
-            <div><p className="eyebrow">From evidence to execution</p><h2>One governance position. Three focused workstreams.</h2></div>
-            <p>The evidence map defines what must be true. These workstreams define how to build, govern and operate the agent-specific portion of that proof.</p>
-          </div>
-          <div className="agenda-overview-grid">
-            {workstreams.map((item) => <a href={item.href} key={item.label}>
-              <span className="agenda-day-label"><CalendarDays size={16} />{item.label}</span>
-              <h3>{item.title}</h3><p>{item.detail}</p>
-              <small className="section-list-label">Sections inside</small>
-              <ol>{item.topics.map((topic, index) => <li key={topic}><span>{String(index + 1).padStart(2, '0')}</span>{topic}</li>)}</ol>
-              <strong>{item.action} <ArrowRight size={16} /></strong>
-            </a>)}
-          </div>
-          <div className="supporting-pages" aria-label="Supporting pages">
-            <span>Supporting pages</span>
-            <a href="./workshop.html"><strong>Workshop Prep</strong><small>Hypotheses, maturity, and twelve decisions</small><ArrowRight size={16} /></a>
-            <a href="./fabric-foundry.html"><strong>Fabric + Foundry Scenario</strong><small>Iceberg, labels, OneLake, and source authorization</small><ArrowRight size={16} /></a>
-          </div>
-        </section>
-
-        <section className="section position" id="position">
-          <div className="section-heading">
-            <p className="eyebrow">Enterprise governance model</p>
-            <h2>Define trust. Enforce interactions. Execute under contract.</h2>
-            <p>Governance stays consistent when policy definition, live enforcement and workload execution have clear owners. Telemetry, evidence and revocation span all three planes.</p>
-          </div>
-          <div className="governance-plane-grid">
-            <a className="plane-card" href="https://learn.microsoft.com/en-us/microsoft-agent-365/overview" target="_blank" rel="noreferrer">
-              <div className="card-top"><span className="icon-box"><Boxes /></span><span className="status">Define</span></div>
-              <p className="kicker">Control plane</p><h3>Agent 365 + Foundry</h3>
-              <p>Register governed capabilities and define trust before runtime.</p>
-              <ul><li><Check /> Record purpose, owner, identity and scope</li><li><Check /> Declare tools, APIs and data dependencies</li><li><Check /> Track risk, version, evidence and lifecycle</li><li><CircleAlert /> Make revocation and exceptions explicit</li></ul>
-              <strong className="card-link">Open Agent 365 overview <ExternalLink size={14} /></strong>
-            </a>
-            <a className="plane-card apim-card" href="https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities" target="_blank" rel="noreferrer">
-              <div className="card-top"><span className="icon-box"><Route /></span><span className="status">Enforce</span></div>
-              <p className="kicker">Interaction plane</p><h3>APIM + source systems</h3>
-              <p>Evaluate each model, agent, tool and data interaction in context.</p>
-              <ul><li><Check /> Authenticate agent and requesting user</li><li><Check /> Apply safety, scope, rate and cost policies</li><li><Check /> Preserve delegated identity downstream</li><li><Check /> Keep RLS, CLS and denials at the source</li></ul>
-              <strong className="card-link">Open APIM AI gateway <ExternalLink size={14} /></strong>
-            </a>
-            <a className="plane-card runtime-card" href="./hosted-agents.html">
-              <div className="card-top"><span className="icon-box"><ShieldCheck /></span><span className="status">Execute</span></div>
-              <p className="kicker">Runtime plane</p><h3>Approved agent runtimes</h3>
-              <p>Run agents close to their domain while inheriting shared governance contracts.</p>
-              <ul><li><Check /> Isolate sessions, secrets and network access</li><li><Check /> Keep deployment configuration portable</li><li><Check /> Trace agents, tools, data and policy results</li><li><Check /> Gate releases with evaluation and rollback</li></ul>
-              <strong className="card-link">Open hosted runtime design <ArrowRight size={14} /></strong>
-            </a>
-          </div>
-          <div className="position-line"><GitBranch size={22} /><p><strong>Operating model:</strong> centralize identity, policy, registry and evidence by default; allow domain execution by exception only when it remains observable, reversible and connected to the same interaction controls.</p></div>
         </section>
 
         <section className="closing"><ShieldCheck size={24} /><div><p className="eyebrow">Governance standard</p><blockquote>Every agent is known, constrained, attributable, and authorized all the way to the data.</blockquote></div></section>

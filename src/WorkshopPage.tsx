@@ -11,12 +11,12 @@ const priorities = [
 ]
 
 const hypotheses = [
-  ['21', 'Conversational analytics', 'Prove', 'Use the signed-in user and the fixed 20-question set. Zero row, column, or label violations.'],
-  ['22', 'Structured-data agent security', 'Critical', 'Fabric Data Agent must preserve user identity. Any service-principal or direct-source bypass is a fail.'],
-  ['23', 'Document permissions and labels', 'Prove', 'Security trimming must occur at query time and sensitivity context must remain with the answer.'],
-  ['24', 'Virtualized data chain', 'Resolve', 'Test the Apache Iceberg zero-copy path. DirectQuery is a fallback, not evidence for this hypothesis.'],
-  ['25', 'External sources through MCP', 'Resolve', 'Both Foundry and Copilot Studio must read the real Snowflake source rather than a connection walkthrough.'],
-  ['26', 'Per-user identity through MCP', 'Pre-test', 'Prove OAuth/OBO in every client path and preserve a source-side 403 without fallback.'],
+  ['21', 'Conversational analytics', 'Prove', 'Use the signed-in user and the fixed 20-question set. Zero row, column, or label violations.', 'https://learn.microsoft.com/en-us/fabric/fundamentals/copilot-privacy-security'],
+  ['22', 'Structured-data agent security', 'Critical', 'Fabric Data Agent must preserve user identity. Any service-principal or direct-source bypass is a fail.', 'https://learn.microsoft.com/en-us/fabric/data-science/data-agent-sharing'],
+  ['23', 'Document permissions and labels', 'Prove', 'Security trimming must occur at query time and sensitivity context must remain with the answer.', 'https://learn.microsoft.com/en-us/azure/search/search-document-level-access-overview'],
+  ['24', 'Virtualized data chain', 'Resolve', 'Test the Apache Iceberg zero-copy path. DirectQuery is a fallback, not evidence for this hypothesis.', 'https://learn.microsoft.com/en-us/fabric/onelake/onelake-shortcuts'],
+  ['25', 'External sources through MCP', 'Resolve', 'Both Foundry and Copilot Studio must read the real Snowflake source rather than a connection walkthrough.', 'https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol'],
+  ['26', 'Per-user identity through MCP', 'Pre-test', 'Prove OAuth/OBO in every client path and preserve a source-side 403 without fallback.', 'https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/mcp-authentication'],
 ]
 
 const readiness = [
@@ -75,7 +75,7 @@ export default function WorkshopPage() {
           <div className="prep-hero-copy">
             <p className="eyebrow">Barcelona · workshop preparation</p>
             <h1>Settle the architecture.<br /><span>Then prove it.</span></h1>
-            <p>The decisions, setup, and evidence required for the scored agentic hypotheses, organized around identity at the source.</p>
+            <p>The solution combines Microsoft Fabric and OneLake governed access with Foundry agents, APIM, A2A and MCP, while Entra preserves the requesting user and each source retains final authorization. This page turns that architecture into the decisions, setup and evidence required to score hypotheses 21–26.</p>
           </div>
           <div className="prep-hero-meta">
             <div><span>Scope</span><strong>Hypotheses 21–26</strong></div>
@@ -92,7 +92,8 @@ export default function WorkshopPage() {
 
         <section className="section prep-hypotheses" id="hypotheses">
           <div className="prep-plan-heading"><div><p className="eyebrow">02 · Scored scope</p><h2>Six hypotheses. One identity standard.</h2></div><p>Each pass needs a named user, the exact surface and connector, a source-side authorization decision, and reproducible evidence.</p></div>
-          <div className="prep-hypothesis-grid">{hypotheses.map(([number, title, state, detail]) => <article id={`hypothesis-${number}`} key={number}><span>#{number}</span><div><h3>{title}</h3><p>{detail}</p></div><strong>{state}</strong></article>)}</div>
+          <div className="hypothesis-source-note"><ShieldCheck size={20} /><p><strong>Documentation supports the mechanism, not the pass.</strong> Each link establishes official capability, prerequisites or limitations. Only the named-user live test and captured source-side decision can pass a hypothesis.</p></div>
+          <div className="prep-hypothesis-grid">{hypotheses.map(([number, title, state, detail, source]) => <article id={`hypothesis-${number}`} key={number}><span>#{number}</span><div><h3>{title}</h3><p>{detail}</p><a className="hypothesis-source-link" href={source} target="_blank" rel="noreferrer">Official documentation <ExternalLink size={14} /></a></div><strong>{state}</strong></article>)}</div>
         </section>
 
         <section className="section prep-readiness">
