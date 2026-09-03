@@ -1,9 +1,9 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight, Bot, CalendarDays, Database, ExternalLink, FileCheck2, FlaskConical, GitBranch, KeyRound, Layers3, ShieldCheck, Wrench } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Bot, CalendarDays, Database, ExternalLink, FileCheck2, FlaskConical, GitBranch, House, KeyRound, Layers3, ShieldCheck, Wrench } from 'lucide-react'
 import './index.css'
 import './App.css'
 
 const testSteps = [
-  ['01', 'Prepare governed tables', 'Load a small authorization-aware dataset into Lakehouse or Warehouse tables. Fabric Data Agent does not read standalone OneLake files.'],
+  ['01', 'Prepare the Iceberg test object', 'Use the Round 2 zero-copy path: expose the external Apache Iceberg table through a OneLake shortcut and a governed semantic or query layer. Mirroring creates a copy; DirectQuery is a fallback but does not clear the Iceberg hypothesis.'],
   ['02', 'Publish the data agent', 'Select only the relevant tables, add domain instructions and examples, publish, then grant both test users READ access to the agent.'],
   ['03', 'Create the Foundry connection', 'Use the Fabric data agent workspace ID and artifact ID to create a Microsoft Fabric project connection in Foundry.'],
   ['04', 'Attach the Fabric tool', 'Add the Microsoft Fabric tool to a Foundry prompt or hosted agent and require it for the fixed test questions.'],
@@ -40,7 +40,7 @@ export default function FabricFoundryPage() {
           <span className="logo-divider" />
           <span className="microsoft-logo"><img src={`${import.meta.env.BASE_URL}microsoft-mark.svg`} alt="" /><strong>Microsoft</strong></span>
         </a>
-        <a className="workshop-back" href="./workshop.html"><ArrowLeft size={16} /> Workshop prep</a>
+        <a className="workshop-back" href="./index.html"><House size={16} /> Home</a>
         <span className="date-pill"><CalendarDays size={15} /> Scenario 22</span>
       </header>
 
@@ -62,7 +62,7 @@ export default function FabricFoundryPage() {
         </section>
 
         <section className="section fabric-flow">
-          <div className="fabric-flow-heading"><p className="eyebrow">Reference architecture</p><h2>Foundry orchestrates. Fabric governs the query.</h2><p>Foundry does not directly read arbitrary OneLake files in this pattern. The Fabric Data Agent selects a supported data source, generates a read-only query, and executes it with the requesting user’s permissions.</p></div>
+          <div className="fabric-flow-heading"><p className="eyebrow">Reference architecture</p><h2>Foundry orchestrates. Fabric governs the query.</h2><p>Keep Snowflake as the system of record and read governed Gold data in place. Foundry does not directly read arbitrary OneLake files in this pattern; Fabric selects a supported source, generates a read-only query, and executes it with the requesting user’s permissions.</p></div>
           <div className="flow-diagram" aria-label="OneLake to Foundry identity-aware architecture">
             <article><span><Database /></span><small>Data foundation</small><h3>OneLake</h3><p>Lakehouse or Warehouse tables, semantic models, KQL, mirrored data or ontology.</p></article>
             <ArrowRight className="flow-arrow" />
@@ -78,13 +78,17 @@ export default function FabricFoundryPage() {
         <section className="section scenario-boundaries">
           <div><p className="eyebrow">PoC guardrails</p><h2>Seven boundaries to state before the demo.</h2></div>
           <div className="boundary-grid">
-            <article><strong>Identity</strong><p>User authentication is required. Service principal authentication is not supported for this Fabric Data Agent integration.</p></article>
-            <article><strong>Tenant and region</strong><p>The Foundry project and Fabric agent must share a tenant. The Fabric agent and its data sources need aligned capacity regions.</p></article>
-            <article><strong>Structured data only</strong><p>Lakehouse files such as PDF, DOCX, CSV or JSON are not read directly. Expose structured data through selected tables.</p></article>
-            <article><strong>Result size</strong><p>Fabric Data Agent is conversational, not a bulk export API. Responses are capped at 25 rows and 25 columns.</p></article>
-            <article><strong>Governance maturity</strong><p>Warehouse DLP is GA, while several Purview interaction and access restriction controls remain preview.</p></article>
-            <article><strong>File ingestion</strong><p>Define extraction, malware scanning, supported formats, label preservation, chunk-level permissions, refresh and deletion before indexing any file. Parsed content must not lose its original access boundary.</p></article>
-            <article><strong>Connector contract</strong><p>Record the connector owner, authentication mode, delegated scopes, supported regions, throttling and source authorization behavior. Test the denied path, not only successful connection.</p></article>
+            {[
+              ['Identity', 'User authentication is required. Service principal authentication is not supported for this Fabric Data Agent integration.'],
+              ['Tenant and region', 'The Foundry project and Fabric agent must share a tenant. The Fabric agent and its data sources need aligned capacity regions.'],
+              ['Structured data only', 'Lakehouse files such as PDF, DOCX, CSV or JSON are not read directly. Expose structured data through selected tables.'],
+              ['Result size', 'Fabric Data Agent is conversational, not a bulk export API. Responses are capped at 25 rows and 25 columns.'],
+              ['Governance maturity', 'Warehouse DLP is GA, while several Purview interaction and access restriction controls remain preview.'],
+              ['File ingestion', 'Define extraction, malware scanning, supported formats, label preservation, chunk-level permissions, refresh and deletion before indexing any file. Parsed content must not lose its original access boundary.'],
+              ['Connector contract', 'Record the connector owner, authentication mode, delegated scopes, supported regions, throttling and source authorization behavior. Test the denied path, not only successful connection.'],
+              ['Safe failure', 'RLS, CLS and sensitivity labels must hold on every read path. If a control cannot be evaluated, return no data rather than an unfiltered answer.'],
+              ['Label continuity', 'Prove both jobs separately: labels prevent unauthorized retrieval and remain attached to the answer. Test OneLake-native and SharePoint-origin documents as distinct paths.'],
+            ].map(([title, detail], index) => <article key={title}><span className="item-number">{String(index + 1).padStart(2, '0')}</span><strong>{title}</strong><p>{detail}</p></article>)}
           </div>
         </section>
 
@@ -98,7 +102,7 @@ export default function FabricFoundryPage() {
         </section>
 
         <section className="section scenario-test" id="test">
-          <div className="scenario-test-heading"><div><p className="eyebrow">Runnable proof</p><h2>Test the connection and the denial.</h2></div><div className="knockout-note"><FlaskConical /><p><strong>Pass threshold:</strong> the allowed user receives only permitted rows; the denied user receives no restricted data; no shared identity or fallback path is used.</p></div></div>
+          <div className="scenario-test-heading"><div><p className="eyebrow">Runnable proof · Round 2 concepts pp. 1–18</p><h2>Test the connection and the denial.</h2></div><div className="knockout-note"><FlaskConical /><p><strong>Pass threshold:</strong> the allowed user receives only permitted rows; the denied user receives no restricted data; no shared identity or fallback path is used. Documentation or a DirectQuery-only result is not evidence for the Iceberg path.</p></div></div>
           <div className="scenario-steps">{testSteps.map(([number, title, detail]) => <article key={number}><span>{number}</span><div><h3>{title}</h3><p>{detail}</p></div></article>)}</div>
           <div className="test-evidence-grid">
             <div><span>Allowed user</span><strong>Expected: authorized rows only</strong><p>Capture the signed-in identity, generated source query, trace and returned row set.</p></div>

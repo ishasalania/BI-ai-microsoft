@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight, Bot, Boxes, Database, GitBranch, KeyRound, MonitorCheck, ShieldCheck } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Bot, Boxes, Database, GitBranch, House, KeyRound, MonitorCheck, ShieldCheck } from 'lucide-react'
 import './index.css'
 import './App.css'
 
@@ -7,6 +7,39 @@ const proofSteps = [
   ['02', 'Connect Databricks', 'Use a remote MCP tool to reach the Databricks interface. Genie is the adapter in this proof, not the customer requirement itself.'],
   ['03', 'Preserve the user', 'Authenticate independently in each tenant. Databricks-native OAuth issues the Tenant 2 token used at the data boundary.'],
   ['04', 'Prove source authorization', 'Ask the same question as users with different entitlements and capture the rows returned by Unity Catalog RLS.'],
+]
+
+const foundationLabs = [
+  {
+    number: '01', title: 'Your first hosted agent',
+    outcome: 'Package a Microsoft Agent Framework agent, run it locally, deploy it with azd, and invoke the managed Responses API endpoint.',
+    relevance: 'Establishes the immutable container, managed identity, port 8088, Responses v2.0 and generated azure.yaml baseline used by the Day 1 proof.',
+    lesson: 'https://beyondelastic.github.io/foundry-advanced-workshop/01-your-first-hosted-agent/',
+    source: 'https://github.com/beyondelastic/foundry-advanced-workshop/tree/main/examples/01-first-hosted-agent',
+  },
+  {
+    number: '02', title: 'Tools and file persistence',
+    outcome: 'Add typed MAF tools and use the hosted /mnt/user filesystem across turns within one session.',
+    relevance: 'Creates the test harness for tool invocation and the User A versus User B session-isolation evidence required before production.',
+    lesson: 'https://beyondelastic.github.io/foundry-advanced-workshop/02-hosted-agent-tools-and-files/',
+    source: 'https://github.com/beyondelastic/foundry-advanced-workshop/tree/main/examples/02-tools-and-files',
+  },
+  {
+    number: '03', title: 'LangGraph hosted agent',
+    outcome: 'Host a compiled LangGraph StateGraph behind the same Responses API and container contract.',
+    relevance: 'Proves that governance attaches to identity, tools, protocol and runtime contracts rather than one orchestration framework.',
+    lesson: 'https://beyondelastic.github.io/foundry-advanced-workshop/03-langgraph-hosted-agent/',
+    source: 'https://github.com/beyondelastic/foundry-advanced-workshop/tree/main/examples/03-langgraph',
+  },
+]
+
+const lessonOneCoverage = [
+  ['Runtime contract', 'Python container on Foundry-managed infrastructure; Responses API v2.0.0 on fixed port 8088; model inference stays in the Foundry deployment, so the agent container does not require a GPU.'],
+  ['Generated manifest', 'Run azd ai agent init in container mode to bind the existing Foundry project and ACR. It generates a git-ignored azure.yaml service block; agent.yaml is legacy and should not be present.'],
+  ['Endpoint and identity', 'Use DefaultAzureCredential. Read the runtime-injected FOUNDRY_PROJECT_ENDPOINT first, with AZURE_AI_PROJECT_ENDPOINT only as the local fallback. The same code then works locally and when hosted.'],
+  ['Container hygiene', 'Ship a Dockerfile that exposes port 8088 and a .dockerignore excluding .venv, .azure, caches, Git metadata and .env. This prevents oversized remote-build archives after a local run.'],
+  ['Execution loop', 'Use azd ai agent run --no-client, invoke locally with azd ai agent invoke --local, deploy with azd deploy, then invoke without --local. Use azd ai agent show and azd ai agent monitor for status and logs.'],
+  ['Provisioning and access', 'Start from the prerequisite Foundry account, project, model deployment and ACR with AcrPull and Foundry User assigned to the project identity. Current tooling manages the runtime identity; no post-deploy manual agent-role assignment is expected.'],
 ]
 
 const resources = [
@@ -32,13 +65,19 @@ export default function HostedAgentsPage() {
   return <div className="detail-page">
     <header className="topbar workshop-topbar">
       <a className="partner-logos" href="./index.html" aria-label="Return to agent governance"><img className="bi-logo" src={`${import.meta.env.BASE_URL}boehringer-ingelheim.svg`} alt="Boehringer Ingelheim" /><span className="logo-divider" /><span className="microsoft-logo"><img src={`${import.meta.env.BASE_URL}microsoft-mark.svg`} alt="" /><strong>Microsoft</strong></span></a>
-      <a className="workshop-back" href="./index.html#workstreams"><ArrowLeft size={16} /> Agenda topics</a>
+      <a className="workshop-back" href="./index.html"><House size={16} /> Home</a>
       <span className="date-pill">Day 1 · Hosted agents</span>
     </header>
     <main>
       <section className="detail-hero hosted-detail-hero">
-        <div><p className="eyebrow">Day 1 · governed agent runtime</p><h1>Host the agent.<br /><span>Keep authorization at source.</span></h1><p className="lede">The customer requirement is a Foundry agent accessing governed Databricks data. Hosting is one layer; identity, runtime policy and Unity Catalog remain the controls that make the path governable.</p><a className="button primary" href="#architecture">Open the architecture <ArrowRight size={17} /></a></div>
+        <div><p className="eyebrow">Day 1 · governed agent runtime</p><h1>Host the agent.<br /><span>Keep authorization at source.</span></h1><p className="lede">The customer requirement is a Foundry agent accessing governed Databricks data. Hosting is one layer; identity, runtime policy and Unity Catalog remain the controls that make the path governable.</p><div className="hero-actions"><a className="button primary" href="#foundation-labs">Start Lessons 1–3 <ArrowRight size={17} /></a><a className="button secondary" href="#architecture">Open the architecture</a></div></div>
         <div className="detail-principles"><span>Proof standard</span><strong>One question</strong><strong>Two users</strong><strong>Different permitted rows</strong></div>
+      </section>
+      <section className="section hosted-foundation" id="foundation-labs">
+        <div className="detail-heading"><div><p className="eyebrow">Foundation labs · Lessons 1–3</p><h2>Learn the runtime before testing the data boundary.</h2></div><p>Use the maintained advanced workshop for runnable commands and code. This page supplies the DataLand sequence and acceptance purpose; the upstream repository remains the technical source.</p></div>
+        <div className="foundation-lab-grid">{foundationLabs.map((lab) => <article key={lab.number}><span className="item-number">{lab.number}</span><h3>{lab.title}</h3><p>{lab.outcome}</p><div className="lab-relevance"><strong>Why it matters here</strong><span>{lab.relevance}</span></div><div className="lab-links"><a href={lab.lesson} target="_blank" rel="noreferrer">Open lesson <ArrowUpRight size={15} /></a><a href={lab.source} target="_blank" rel="noreferrer"><GitBranch size={15} /> GitHub source</a></div></article>)}</div>
+        <div className="lesson-coverage"><div className="lesson-coverage-heading"><div><p className="eyebrow">Lesson 01 coverage</p><h3>Critical details to verify during the lab</h3></div><p>This checklist captures the implementation contract and known failure points. Use the maintained lesson for the complete code, generated values, prompts and troubleshooting commands.</p></div><div className="lesson-coverage-grid">{lessonOneCoverage.map(([title, detail], index) => <article key={title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{title}</strong><p>{detail}</p></div></article>)}</div></div>
+        <div className="foundation-guidance"><ShieldCheck /><p><strong>Workshop rule:</strong> complete Lessons 1 and 2 before the scored Databricks path. Lesson 3 is the framework-portability proof. Pin a known repository revision for the event, but keep the maintained upstream lesson as the canonical instructions.</p></div>
       </section>
       <section className="section" id="architecture">
         <div className="detail-heading"><div><p className="eyebrow">Cross-tenant path</p><h2>Two identity hops. One visible authorization decision.</h2></div><p>Tenant 2 validates its own Databricks OAuth token, not the Tenant 1 token. The proof succeeds only when Unity Catalog filters the answer for the signed-in user.</p></div>
@@ -47,7 +86,7 @@ export default function HostedAgentsPage() {
           <div><KeyRound /><strong>RemoteTool + OAuth</strong><small>Independent token hop</small></div>
           <article><span><Database /></span><small>Tenant 2</small><h3>Azure Databricks</h3><p>Genie handles the natural-language request. Unity Catalog RLS decides which rows return.</p></article>
         </div>
-        <div className="proof-banner"><ShieldCheck /><div><strong>Customer-safe claim</strong><p>The community repository is a reproducible proof pattern, not an official Microsoft sample. Validate its OAuth consent, tenant setup and authorization behavior in the customer environment.</p></div></div>
+        <div className="proof-banner"><ShieldCheck /><div><strong>Validation boundary</strong><p>The community repository is a reproducible proof pattern, not an official Microsoft sample. Its OAuth consent, tenant setup, and authorization behavior require validation in the target environment.</p></div></div>
       </section>
       <section className="section identity-options">
         <div className="detail-heading"><div><p className="eyebrow">Authentication and authorization</p><h2>Propagate identity in one of two explicit ways.</h2></div><p>Foundry authenticates the caller and tool connection. It does not replace the source system’s authorization decision. Choose the token path before implementation and prove that the scope only narrows as the request moves downstream.</p></div>
@@ -58,7 +97,7 @@ export default function HostedAgentsPage() {
       <section className="section detail-steps"><div className="detail-heading"><div><p className="eyebrow">Day 1 blocks</p><h2>Build vertically, then test horizontally.</h2></div><p>No fixed times. Each block ends with evidence that can be reviewed before the next begins.</p></div><div className="step-grid">{proofSteps.map(([number, title, detail]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{detail}</p></article>)}</div></section>
       <section className="section hosted-production">
         <div className="detail-heading light"><div><p className="eyebrow">Production readiness</p><h2>Hosting changes operations, not the authorization contract.</h2></div><p>The team has not yet deployed a production agent. Treat isolation, portability, monitoring and controlled evolution as acceptance criteria, not post-PoC cleanup.</p></div>
-        <div className="production-grid">{productionChecks.map(([title, detail, href], index) => <a href={href} target="_blank" rel="noreferrer" key={title}><span className="production-icon">{index === 0 ? <Boxes /> : index === 3 ? <MonitorCheck /> : <ShieldCheck />}</span><h3>{title}</h3><p>{detail}</p><strong className="card-link light-link">Open official topic <ArrowUpRight size={14} /></strong></a>)}</div>
+        <div className="production-grid">{productionChecks.map(([title, detail, href], index) => <a href={href} target="_blank" rel="noreferrer" key={title}><small className="item-number light-number">{String(index + 1).padStart(2, '0')}</small><span className="production-icon">{index === 0 ? <Boxes /> : index === 3 ? <MonitorCheck /> : <ShieldCheck />}</span><h3>{title}</h3><p>{detail}</p><strong className="card-link light-link">Open official topic <ArrowUpRight size={14} /></strong></a>)}</div>
       </section>
       <section className="section detail-resources"><div className="detail-heading"><div><p className="eyebrow">Build resources</p><h2>Proof first. Product claims second.</h2></div></div><div className="resource-card-grid">{resources.map(([type, title, href]) => <a href={href} target="_blank" rel="noreferrer" key={href}><GitBranch /><small>{type}</small><h3>{title}</h3><strong>Open resource <ArrowUpRight size={15} /></strong></a>)}</div></section>
     </main>
