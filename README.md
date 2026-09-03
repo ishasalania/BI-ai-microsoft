@@ -2,6 +2,8 @@
 
 A responsive briefing page for the DataLand Round 2 agent-governance discussion. It covers the Agent 365 and APIM control-plane position, identity-aware retrieval, tests 21–26, and the actions required before the workshop.
 
+**Published briefing:** [ishasalania.github.io/BI-ai-microsoft](https://ishasalania.github.io/BI-ai-microsoft/)
+
 ## Local development
 
 ```bash
