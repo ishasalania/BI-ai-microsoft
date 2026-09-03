@@ -97,16 +97,26 @@ const tests = [
   { id: 26, title: 'Per-user identity through MCP', state: 'Pre-test', surface: 'OAuth 2.1 / OBO · server-side denial', evidence: 'Mandatory pre-test · both agent surfaces', note: 'Validate token pass-through in both surfaces. Entra sign-in alone does not prove that the user token reached the server.', offering: 'Entra OBO and OAuth 2.1 token forwarding through Copilot Studio and Foundry. A server-side 403 must be returned unchanged, with no framework bypass.' },
 ]
 
-const agendaDays = [
+const workstreams = [
   {
-    day: 'Day 1',
+    label: 'Workstream 01 · Core',
+    action: 'Open governance position',
+    title: 'Agent governance platform',
+    detail: 'Define how Agent 365, APIM and Entra work together across inventory, runtime enforcement, identity and evidence.',
+    topics: ['Fleet visibility', 'Runtime policy', 'Delegated identity', 'Audit evidence'],
+    href: '#position',
+  },
+  {
+    label: 'Workstream 02 · Day 1',
+    action: 'Open hosted agents',
     title: 'Hosted agents and governed data',
     detail: 'Move from the governance position into a Foundry-hosted agent that reaches Databricks under the signed-in user’s source permissions.',
     topics: ['Governance frame', 'Hosted runtime', 'Cross-tenant data', 'Authorization evidence'],
     href: './hosted-agents.html',
   },
   {
-    day: 'Day 2',
+    label: 'Workstream 03 · Day 2',
+    action: 'Open A2A and MCP',
     title: 'A2A and MCP interoperability',
     detail: 'Separate agent delegation from tool connectivity, deploy both protocol paths, and close with one combined governed flow.',
     topics: ['Protocol boundaries', 'MCP deployment', 'A2A deployment', 'Combined showcase'],
@@ -174,7 +184,7 @@ function App() {
         </a>
         <nav aria-label="Page sections">
           <a href="#workshop">Workshop</a><a href="#position">Position</a><a href="#security">Security proof</a>
-          <a href="#readiness">GA vs preview</a><a href="#tests">Tests 21–26</a><a href="./workshop.html">Workshop prep</a>
+          <a href="#readiness">GA vs preview</a><a href="#tests">Tests 21–26</a><a href="#workstreams">Workstreams</a>
         </nav>
         <span className="date-pill"><CalendarDays size={15} /> 8–10 Sep</span>
       </header>
@@ -344,17 +354,17 @@ function App() {
           </div>
         </section>
 
-        <section className="section agenda-overview" id="agenda">
+        <section className="section agenda-overview" id="workstreams">
           <div className="agenda-overview-heading">
-            <div><p className="eyebrow">AI track agenda topics</p><h2>Two focused days. Detail lives on separate pages.</h2></div>
-            <p>The governance position stays here. Each day opens into its own working page with architecture, deployment guidance, proof criteria and source links. Blocks are intentionally shown without fixed times.</p>
+            <div><p className="eyebrow">Three workstreams</p><h2>One governance position. Three focused paths.</h2></div>
+            <p>Start with the platform governance model, then open a dedicated page for each implementation workstream. The linked pages hold the architecture, deployment guidance, proof criteria and sources without crowding this briefing.</p>
           </div>
           <div className="agenda-overview-grid">
-            {agendaDays.map((item) => <a href={item.href} key={item.day}>
-              <span className="agenda-day-label"><CalendarDays size={16} />{item.day}</span>
+            {workstreams.map((item) => <a href={item.href} key={item.label}>
+              <span className="agenda-day-label"><CalendarDays size={16} />{item.label}</span>
               <h3>{item.title}</h3><p>{item.detail}</p>
               <ol>{item.topics.map((topic, index) => <li key={topic}><span>{String(index + 1).padStart(2, '0')}</span>{topic}</li>)}</ol>
-              <strong>Open {item.day} <ArrowRight size={16} /></strong>
+              <strong>{item.action} <ArrowRight size={16} /></strong>
             </a>)}
           </div>
         </section>
