@@ -28,7 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build
-        run: npm run build
+        run: npm run build:protected
+        env:
+          SITE_PASSWORD: ${{ secrets.SITE_PASSWORD }}
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site

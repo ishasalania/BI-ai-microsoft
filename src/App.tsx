@@ -1,4 +1,3 @@
-import { useState, type FormEvent } from 'react'
 import {
   ArrowRight, Boxes, CalendarDays, Check, ChevronDown, CircleAlert, ExternalLink,
   Fingerprint, GitBranch, Route, ShieldCheck,
@@ -65,54 +64,7 @@ const agentHypotheses = [
   ['26', 'Per-user identity through MCP', 'OAuth 2.1 on every client path', 'Snowflake source authorization', 'The requesting user reaches the server and a source-side 403 remains a denial with no fallback.'],
 ]
 
-const accessHash = import.meta.env.VITE_ACCESS_HASH as string | undefined
-
-async function hashPassword(password: string) {
-  const encoded = new TextEncoder().encode(password)
-  const digest = await crypto.subtle.digest('SHA-256', encoded)
-  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, '0')).join('')
-}
-
 function App() {
-  const [authorized, setAuthorized] = useState(() => !accessHash || sessionStorage.getItem('brief-access') === accessHash)
-  const [password, setPassword] = useState('')
-  const [accessError, setAccessError] = useState(false)
-
-  async function handleAccess(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    const submittedHash = await hashPassword(password)
-    if (submittedHash === accessHash) {
-      sessionStorage.setItem('brief-access', submittedHash)
-      setAuthorized(true)
-      setAccessError(false)
-      return
-    }
-    setAccessError(true)
-  }
-
-  if (!authorized) {
-    return (
-      <main className="access-page">
-        <div className="access-branding">
-          <img className="bi-logo" src={`${import.meta.env.BASE_URL}boehringer-ingelheim.svg`} alt="Boehringer Ingelheim" />
-          <span className="logo-divider" />
-          <span className="microsoft-logo"><img src={`${import.meta.env.BASE_URL}microsoft-mark.svg`} alt="" /><strong>Microsoft</strong></span>
-        </div>
-        <form className="access-panel" onSubmit={handleAccess}>
-          <p className="eyebrow">DataLand PoC Round 2</p>
-          <h1>Workshop briefing</h1>
-          <p>This preparation site is restricted. Enter the workshop access password to continue.</p>
-          <label htmlFor="access-password">Password</label>
-          <div className="access-input-row">
-            <input id="access-password" type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} aria-invalid={accessError} autoFocus />
-            <button type="submit">Open briefing <ArrowRight size={17} /></button>
-          </div>
-          {accessError && <p className="access-error" role="alert">That password is not valid.</p>}
-        </form>
-      </main>
-    )
-  }
-
   return (
     <div className="app-shell">
       <header className="topbar">
