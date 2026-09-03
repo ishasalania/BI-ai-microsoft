@@ -69,3 +69,4 @@ nav a,.date-pill,.workshop-back,.scenario-link,footer,.partner-label,.eyebrow,.k
 @media(max-width:600px){.workshop-page .priority-list,.workshop-page .prep-checklist{grid-template-columns:1fr}.workshop-page .priority-list article{border-right:0}}
 @media(max-width:900px){.prep-readiness-grid{grid-template-columns:1fr 1fr}.prep-readiness-grid article{border-bottom:1px solid var(--line)}}
 @media(max-width:600px){.prep-hypothesis-grid article{grid-template-columns:54px 1fr}.prep-hypothesis-grid article>strong{grid-column:2;justify-self:start}.prep-readiness-grid{grid-template-columns:1fr}.prep-readiness-grid article{border-right:0}}
+.agent-proof-map .section-footnote{padding-top:0;border-top:0}
