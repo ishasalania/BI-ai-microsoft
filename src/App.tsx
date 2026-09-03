@@ -156,7 +156,7 @@ function App() {
         </section>
 
         <section className="hackathon-core" id="hackathon">
-          <details open>
+          <details>
             <summary>
               <div>
                 <p className="eyebrow">Actual hackathon · Day 1 core build</p>
