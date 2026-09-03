@@ -184,7 +184,7 @@ function App() {
         </a>
         <nav aria-label="Page sections">
           <a href="#workshop">Workshop</a><a href="#position">Position</a><a href="#security">Security proof</a>
-          <a href="#readiness">GA vs preview</a><a href="#tests">Tests 21–26</a><a href="#workstreams">Workstreams</a>
+          <a href="#readiness">GA vs preview</a><a href="#tests">Hypotheses 21–26</a><a href="#workstreams">Workstreams</a>
         </nav>
         <span className="date-pill"><CalendarDays size={15} /> 8–10 Sep</span>
       </header>
@@ -203,9 +203,9 @@ function App() {
           <div className="hero-visual" aria-label="Governance layers diagram">
             <div className="orbit orbit-one" /><div className="orbit orbit-two" />
             <div className="control-node center-node"><ShieldCheck size={29} /><strong>Governance</strong><span>policy · identity · evidence</span></div>
-            <div className="control-node node-a"><Boxes size={20} /><strong>Agent 365</strong><span>fleet visibility</span></div>
-            <div className="control-node node-b"><Route size={20} /><strong>APIM</strong><span>runtime control</span></div>
-            <div className="control-node node-c"><Fingerprint size={20} /><strong>Entra</strong><span>user context</span></div>
+            <div className="control-node node-a"><Boxes size={20} /><strong>Agent 365</strong><span>fleet<br />visibility</span></div>
+            <div className="control-node node-b"><Route size={20} /><strong>APIM</strong><span>runtime<br />control</span></div>
+            <div className="control-node node-c"><Fingerprint size={20} /><strong>Entra</strong><span>user<br />context</span></div>
           </div>
         </section>
 
@@ -214,6 +214,21 @@ function App() {
           <div><span>Critical proof</span><strong>#22 · zero bypass</strong></div>
           <div><span>Agentic scope</span><strong>Hypotheses 21 through 26</strong></div>
           <div><span>Non-negotiable</span><strong>No service principal</strong></div>
+        </section>
+
+        <section className="section agenda-overview" id="workstreams">
+          <div className="agenda-overview-heading">
+            <div><p className="eyebrow">Three workstreams</p><h2>One governance position. Three focused paths.</h2></div>
+            <p>Start with the platform governance model, then open a dedicated page for each implementation workstream. The linked pages hold the architecture, deployment guidance, proof criteria and sources without crowding this briefing.</p>
+          </div>
+          <div className="agenda-overview-grid">
+            {workstreams.map((item) => <a href={item.href} key={item.label}>
+              <span className="agenda-day-label"><CalendarDays size={16} />{item.label}</span>
+              <h3>{item.title}</h3><p>{item.detail}</p>
+              <ol>{item.topics.map((topic, index) => <li key={topic}><span>{String(index + 1).padStart(2, '0')}</span>{topic}</li>)}</ol>
+              <strong>{item.action} <ArrowRight size={16} /></strong>
+            </a>)}
+          </div>
         </section>
 
         <section className="section round-context" id="context">
@@ -337,7 +352,7 @@ function App() {
 
         <section className="section tests" id="tests">
           <div className="section-heading row-heading">
-            <div><p className="eyebrow">Round 2 scored surface</p><h2>Six hypotheses. Identity is the common control.</h2></div>
+            <div><p className="eyebrow">Hypotheses 21–26</p><h2>Six hypotheses. Identity is the common control.</h2></div>
             <button className="text-button" type="button" onClick={() => setExpanded(!expanded)} aria-expanded={expanded}>{expanded ? 'Condense view' : 'Show test detail'} <ChevronDown className={expanded ? 'rotate' : ''} size={17} /></button>
           </div>
           <div className="test-legend"><span>Hypothesis</span><span>Threshold, evidence and Microsoft response</span><span>Status</span></div>
@@ -351,21 +366,6 @@ function App() {
             <article className="claim-confirmed"><span>Confirmed</span><h3>Governance gaps are real</h3><p>Collibra–Purview is “not achievable natively” for #5 and #6. All agentic hypotheses score security, permissions and governance, not answer quality.</p></article>
             <article className="claim-corrected"><span>Corrected</span><h3>Shortcuts do not carry identity</h3><p>For whole-path enforcement, Microsoft’s recorded answer is Snowflake Direct Query with SSO. That conflicts with the zero-copy shortcut architecture.</p></article>
             <article className="claim-unverified"><span>Evidence standard</span><h3>Document the exact path</h3><p>Record the user, surface, connector, token path, source-side authorization decision and result for every claimed pass or failure.</p></article>
-          </div>
-        </section>
-
-        <section className="section agenda-overview" id="workstreams">
-          <div className="agenda-overview-heading">
-            <div><p className="eyebrow">Three workstreams</p><h2>One governance position. Three focused paths.</h2></div>
-            <p>Start with the platform governance model, then open a dedicated page for each implementation workstream. The linked pages hold the architecture, deployment guidance, proof criteria and sources without crowding this briefing.</p>
-          </div>
-          <div className="agenda-overview-grid">
-            {workstreams.map((item) => <a href={item.href} key={item.label}>
-              <span className="agenda-day-label"><CalendarDays size={16} />{item.label}</span>
-              <h3>{item.title}</h3><p>{item.detail}</p>
-              <ol>{item.topics.map((topic, index) => <li key={topic}><span>{String(index + 1).padStart(2, '0')}</span>{topic}</li>)}</ol>
-              <strong>{item.action} <ArrowRight size={16} /></strong>
-            </a>)}
           </div>
         </section>
 
