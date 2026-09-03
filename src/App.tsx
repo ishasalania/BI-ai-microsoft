@@ -239,9 +239,16 @@ function App() {
         </section>
 
         <section className="section evidence-map" id="evidence">
-          <div className="evidence-heading"><div><p className="eyebrow">Complete Round 2 scope</p><h2>One PoC. Six connected evidence groups.</h2></div></div>
-          <div className="evidence-group-list">{round2Groups.map(([number, title, hypotheses, detail]) => <article key={number}><span>{number}</span><h3>{title}</h3><strong>{hypotheses}</strong><p>{detail}</p></article>)}</div>
-          <p className="section-footnote section-footnote-light">The test order follows the dependency chain: read in place, enforce access, govern assistants, synchronize governance, operate the marketplace, then prove direct agent-to-source access.</p>
+          <details className="evidence-disclosure">
+            <summary>
+              <div><p className="eyebrow">Complete Round 2 scope</p><h2>One PoC. Six connected evidence groups.</h2></div>
+              <span className="evidence-toggle"><ChevronDown size={20} /><span className="when-closed">Show evidence groups</span><span className="when-open">Hide evidence groups</span></span>
+            </summary>
+            <div className="evidence-expanded">
+              <div className="evidence-group-list">{round2Groups.map(([number, title, hypotheses, detail]) => <article key={number}><span>{number}</span><h3>{title}</h3><strong>{hypotheses}</strong><p>{detail}</p></article>)}</div>
+              <p className="section-footnote section-footnote-light">The test order follows the dependency chain: read in place, enforce access, govern assistants, synchronize governance, operate the marketplace, then prove direct agent-to-source access.</p>
+            </div>
+          </details>
         </section>
 
         <section className="section agent-proof-map" id="agent-hypotheses">
