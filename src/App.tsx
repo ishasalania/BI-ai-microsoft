@@ -180,7 +180,6 @@ function App() {
         <section className="section agenda-overview" id="workstreams">
           <div className="agenda-overview-heading">
             <div><p className="eyebrow">Three workstreams</p><h2>One governance position. Three focused paths.</h2></div>
-            <p>Start with the platform governance model, then open a dedicated page for each implementation workstream. The linked pages hold the architecture, deployment guidance, proof criteria and sources without crowding this briefing.</p>
           </div>
           <div className="agenda-overview-grid">
             {workstreams.map((item) => <a href={item.href} key={item.label}>
@@ -191,6 +190,7 @@ function App() {
               <strong>{item.action} <ArrowRight size={16} /></strong>
             </a>)}
           </div>
+          <p className="section-footnote">Start with the platform governance model, then open a dedicated page for each implementation workstream. The linked pages hold the architecture, deployment guidance, proof criteria and sources without crowding this briefing.</p>
 
           <div className="governance-cluster" id="position">
             <div className="section-heading">
@@ -232,22 +232,25 @@ function App() {
         </section>
 
         <section className="section integrated-architecture" id="architecture">
-          <div className="architecture-heading"><div><p className="eyebrow">Integrated target state</p><h2>DataLand foundation. Microsoft intelligence and control.</h2></div><p>The platform is deliberately layered. Experience and runtime can evolve without moving the system of record or rewriting the authorization contract.</p></div>
+          <div className="architecture-heading"><div><p className="eyebrow">Integrated target state</p><h2>DataLand foundation. Microsoft intelligence and control.</h2></div></div>
           <div className="architecture-stack">{architectureLayers.map(([number, title, detail]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{detail}</p></article>)}</div>
           <div className="architecture-principle"><GitBranch size={21} /><p><strong>Coexistence is the default:</strong> start from Snowflake Gold and governed external data, use OneLake shortcuts or open formats only where the zero-copy preconditions hold, and introduce copying only as an explicit architecture decision.</p></div>
+          <p className="section-footnote">The platform is deliberately layered. Experience and runtime can evolve without moving the system of record or rewriting the authorization contract.</p>
         </section>
 
         <section className="section evidence-map" id="evidence">
-          <div className="evidence-heading"><div><p className="eyebrow">Complete Round 2 scope</p><h2>One PoC. Six connected evidence groups.</h2></div><p>The test order follows the dependency chain: read in place, enforce access, govern assistants, synchronize governance, operate the marketplace, then prove direct agent-to-source access.</p></div>
+          <div className="evidence-heading"><div><p className="eyebrow">Complete Round 2 scope</p><h2>One PoC. Six connected evidence groups.</h2></div></div>
           <div className="evidence-group-list">{round2Groups.map(([number, title, hypotheses, detail]) => <article key={number}><span>{number}</span><h3>{title}</h3><strong>{hypotheses}</strong><p>{detail}</p></article>)}</div>
+          <p className="section-footnote section-footnote-light">The test order follows the dependency chain: read in place, enforce access, govern assistants, synchronize governance, operate the marketplace, then prove direct agent-to-source access.</p>
         </section>
 
         <section className="section agent-proof-map" id="agent-hypotheses">
-          <div className="evidence-heading"><div><p className="eyebrow">Agent focus · hypotheses 21–26</p><h2>Every hypothesis has a surface, data path and proof.</h2></div><p>This is the agent-specific slice of Round 2. Open any row for its scored definition, then use the workstream pages for architecture and implementation detail.</p></div>
+          <div className="evidence-heading"><div><p className="eyebrow">Agent focus · hypotheses 21–26</p><h2>Every hypothesis has a surface, data path and proof.</h2></div></div>
           <div className="hypothesis-map" role="table" aria-label="Agent hypothesis evidence map">
             <div className="hypothesis-map-head" role="row"><span>Hypothesis</span><span>Test surface</span><span>Governed data path</span><span>Pass evidence</span></div>
             {agentHypotheses.map(([number, title, surface, dataPath, proof]) => <a href={`./workshop.html#hypothesis-${number}`} role="row" key={number}><span><strong>#{number}</strong><small>{title}</small></span><span>{surface}</span><span>{dataPath}</span><span>{proof}<ArrowRight size={15} /></span></a>)}
           </div>
+          <p className="section-footnote">This is the agent-specific slice of Round 2. Open any row for its scored definition, then use the workstream pages for architecture and implementation detail.</p>
         </section>
 
         <section className="closing"><ShieldCheck size={24} /><div><p className="eyebrow">Governance standard</p><blockquote>Every agent is known, constrained, attributable, and authorized all the way to the data.</blockquote></div></section>
