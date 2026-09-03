@@ -3,8 +3,8 @@ import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 const password = process.env.SITE_PASSWORD
-if (!password || password.length < 16) {
-  throw new Error('SITE_PASSWORD must be set to at least 16 characters')
+if (!password) {
+  throw new Error('SITE_PASSWORD must be set')
 }
 
 const outputDirectory = new URL('../dist/', import.meta.url)
