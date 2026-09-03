@@ -55,30 +55,30 @@ export default function WorkshopPage() {
           <span className="microsoft-logo"><img src={`${import.meta.env.BASE_URL}microsoft-mark.svg`} alt="" /><strong>Microsoft</strong></span>
         </a>
         <a className="workshop-back" href="./index.html"><ArrowLeft size={16} /> Agent governance</a>
-        <span className="date-pill"><CalendarDays size={15} /> Agentic governance platform</span>
+        <span className="date-pill"><CalendarDays size={15} /> AI track · Day 1 + 2</span>
       </header>
 
       <main>
-        <section className="track-hero" id="platform">
+        <section className="track-hero">
           <div>
-            <p className="eyebrow">Agentic governance platform · customer discussion guide</p>
-            <h1>Govern every agent.<br /><span>Prove every boundary.</span></h1>
-            <p className="lede">A platform position for governing agent identity, runtime access, delegation and evidence across Microsoft and third-party estates. Hosted agents and A2A/MCP are implementation capabilities within that governance model.</p>
-            <div className="hero-actions"><a className="button primary" href="#hosted">Explore the platform <ArrowRight size={17} /></a><a className="button secondary" href="#agenda">Open agenda</a></div>
+            <p className="eyebrow">AI track · customer discussion guide</p>
+            <h1>Build the agent.<br /><span>Prove the boundary.</span></h1>
+            <p className="lede">A practical route from a Foundry hosted agent to governed Databricks data, followed by a clear choice between agent collaboration with A2A and tool connectivity with MCP.</p>
+            <div className="hero-actions"><a className="button primary" href="#hosted">Hosted agents <ArrowRight size={17} /></a><a className="button secondary" href="#agenda">Open agenda</a></div>
           </div>
-          <div className="track-map" aria-label="Agentic governance platform capabilities">
-            <article><span>01</span><ShieldCheck /><div><strong>Governance and control</strong><small>Identity, policy and evidence</small></div></article>
-            <article><span>02</span><Bot /><div><strong>Governed agent runtime</strong><small>Hosted agents and data access</small></div></article>
-            <article><span>03</span><Network /><div><strong>Protocol interoperability</strong><small>A2A delegation and MCP tools</small></div></article>
+          <div className="track-map" aria-label="AI track topics">
+            <article><span>01</span><Bot /><div><strong>Hosted agents</strong><small>Foundry to Databricks</small></div></article>
+            <article><span>02</span><Network /><div><strong>A2A vs MCP</strong><small>Agent or tool boundary</small></div></article>
+            <article><span>03</span><CalendarDays /><div><strong>Two-day agenda</strong><small>Four blocks each day</small></div></article>
           </div>
         </section>
 
-        <nav className="track-jump" aria-label="Agentic governance platform sections">
-          <a href="#hosted">Governed runtime</a><a href="#protocols">Protocol controls</a><a href="#agenda">Workshop agenda</a>
+        <nav className="track-jump" aria-label="AI track sections">
+          <a href="#hosted">01 · Hosted agents</a><a href="#protocols">02 · A2A vs MCP</a><a href="#agenda">03 · Agenda</a>
         </nav>
 
         <section className="section hosted-section" id="hosted">
-          <div className="track-heading"><div><p className="eyebrow">Platform capability · governed runtime</p><h2>Hosted agents are one governed execution surface.</h2></div><p>The platform requirement is broader than hosting: discover the agent, bind identity, control runtime access, preserve source authorization and capture evidence. This proof applies that model to a Foundry agent accessing governed Databricks data.</p></div>
+          <div className="track-heading"><div><p className="eyebrow">01 · Hosted agents</p><h2>Foundry-hosted reasoning. Databricks-enforced access.</h2></div><p>The client ask is a Foundry agent accessing governed Databricks data. The supplied proof uses Genie as the natural-language interface, MCP as the remote-tool contract, and Unity Catalog as the authorization boundary.</p></div>
           <div className="cross-tenant-flow" aria-label="Cross-tenant hosted agent architecture">
             <article><span><Bot /></span><small>Tenant 1</small><h3>Foundry hosted agent</h3><p>Agent Framework code, Responses endpoint and user-facing orchestration.</p></article>
             <div className="flow-bridge"><KeyRound /><strong>RemoteTool + OAuth</strong><small>Independent token hop</small></div>
@@ -90,7 +90,7 @@ export default function WorkshopPage() {
         </section>
 
         <section className="section protocol-section" id="protocols">
-          <div className="track-heading light"><div><p className="eyebrow">Platform capability · protocol controls</p><h2>Govern delegation and tool access differently.</h2></div><p>A2A and MCP are complementary platform boundaries. A2A governs collaboration with an independent agent. MCP governs an agent’s connection to tools, APIs and data.</p></div>
+          <div className="track-heading light"><div><p className="eyebrow">02 · Protocol choice</p><h2>A2A and MCP solve different problems.</h2></div><p>They are complementary. A specialist agent can be exposed through A2A while using MCP internally to reach governed tools and data.</p></div>
           <div className="protocol-grid">
             <article className="protocol-card a2a-card"><div className="protocol-title"><Network /><div><span>Agent to agent</span><h3>A2A</h3></div></div><p>Use when an independent agent owns skills, reasoning and task state, and another agent needs to discover and delegate work to it.</p><ul><li><CheckCircle2 />Publishes an Agent Card for discovery</li><li><CheckCircle2 />Supports tasks, messages and artifacts</li><li><CheckCircle2 />Keeps the remote agent opaque</li><li><CheckCircle2 />Fits cross-framework collaboration</li></ul><div className="deploy-strip"><Code2 /><div><strong>Deploy it</strong><span>Wrap the Agent Framework agent in an A2A server, expose HTTP, publish <code>/.well-known/agent-card.json</code>, then deploy that web service to your chosen compute.</span></div></div><a href="https://github.com/microsoft/agent-framework/tree/main/python/samples/04-hosting/a2a" target="_blank" rel="noreferrer">Microsoft A2A hosting samples <ExternalLink size={14} /></a></article>
             <article className="protocol-card mcp-card"><div className="protocol-title"><Wrench /><div><span>Agent to tool</span><h3>MCP</h3></div></div><p>Use when an agent needs a standard contract to discover and invoke tools, APIs, prompts or governed data sources.</p><ul><li><CheckCircle2 />Discovers named tools and schemas</li><li><CheckCircle2 />Supports approval before invocation</li><li><CheckCircle2 />Carries connection authentication</li><li><CheckCircle2 />Fits reusable Foundry Toolboxes</li></ul><div className="deploy-strip"><Route /><div><strong>Deploy it</strong><span>Expose a streamable HTTP endpoint on Azure Container Apps or Functions, create a Foundry RemoteTool connection, restrict <code>allowed_tools</code>, and attach it to the agent or Toolbox.</span></div></div><a href="https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol" target="_blank" rel="noreferrer">Microsoft Foundry MCP guide <ExternalLink size={14} /></a></article>
@@ -100,7 +100,7 @@ export default function WorkshopPage() {
         </section>
 
         <section className="section agenda-section" id="agenda">
-          <div className="track-heading"><div><p className="eyebrow">Agentic governance workshop</p><h2>Two days. Four blocks per day.</h2></div><p>No fixed timings are assumed. Each block ends with observable governance evidence so the discussion moves from platform architecture into deployable proof.</p></div>
+          <div className="track-heading"><div><p className="eyebrow">03 · AI track agenda</p><h2>Two days. Four blocks per day.</h2></div><p>No fixed timings are assumed. Each block ends with an observable output so the track moves from architecture into deployable proof.</p></div>
           <div className="agenda-days">
             <section><div className="agenda-day-title"><span>Day 1</span><div><h3>Hosted agents and governed data</h3><p>Build the vertical path and prove per-user access.</p></div></div><div className="agenda-blocks">{agenda.day1.map(([block, title, detail]) => <article key={block}><span>{block}</span><h4>{title}</h4><p>{detail}</p></article>)}</div></section>
             <section><div className="agenda-day-title"><span>Day 2</span><div><h3>Protocol interoperability</h3><p>Deploy A2A and MCP, then show them together.</p></div></div><div className="agenda-blocks">{agenda.day2.map(([block, title, detail]) => <article key={block}><span>{block}</span><h4>{title}</h4><p>{detail}</p></article>)}</div></section>
@@ -110,7 +110,7 @@ export default function WorkshopPage() {
 
         <section className="closing"><ShieldCheck size={24} /><div><p className="eyebrow">Closing proof</p><blockquote>The agent may cross protocols and tenants. The user’s authorization boundary must remain visible, testable and enforced at the data source.</blockquote></div></section>
       </main>
-      <footer><span>DataLand · Agentic governance platform</span><div><a href="./fabric-foundry.html">OneLake scenario</a><a href="./index.html">Governance position</a></div></footer>
+      <footer><span>DataLand · AI track</span><div><a href="./fabric-foundry.html">OneLake scenario</a><a href="./index.html">Agent governance</a></div></footer>
     </div>
   )
 }
