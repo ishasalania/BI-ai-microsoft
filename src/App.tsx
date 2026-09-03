@@ -108,7 +108,7 @@ function App() {
         </section>
 
         <section className="hackathon-core" id="hackathon">
-          <details>
+          <details open>
             <summary>
               <div>
                 <p className="eyebrow">Actual hackathon · Day 1 core build</p>
@@ -134,21 +134,7 @@ function App() {
             <div><p className="eyebrow">Three workstreams</p><h2>One governance position. Three focused paths.</h2></div>
           </div>
           <div className="agenda-overview-grid">
-            {workstreams.map((item, workstreamIndex) => workstreamIndex === 1 ? (
-              <details className="agenda-workstream-disclosure" open key={item.label}>
-                <summary>
-                  <span className="agenda-day-label"><CalendarDays size={16} />{item.label}</span>
-                  <h3>{item.title}</h3>
-                  <span className="agenda-card-toggle"><ChevronDown size={18} /><span className="when-closed">Expand</span><span className="when-open">Collapse</span></span>
-                </summary>
-                <div className="agenda-workstream-expanded">
-                  <p>{item.detail}</p>
-                  <small className="section-list-label">Sections inside</small>
-                  <ol>{item.topics.map((topic, index) => <li key={topic}><span>{String(index + 1).padStart(2, '0')}</span>{topic}</li>)}</ol>
-                  <a href={item.href}>{item.action} <ArrowRight size={16} /></a>
-                </div>
-              </details>
-            ) : <a href={item.href} key={item.label}>
+            {workstreams.map((item) => <a href={item.href} key={item.label}>
                 <span className="agenda-day-label"><CalendarDays size={16} />{item.label}</span>
                 <h3>{item.title}</h3><p>{item.detail}</p>
                 <small className="section-list-label">Sections inside</small>
