@@ -103,7 +103,7 @@ function App() {
         <section className="fact-strip" aria-label="Briefing facts">
           <div><span>Round 2 scope</span><strong>Six evidence groups</strong></div>
           <div><span>Critical proof</span><strong>#22 · zero bypass</strong></div>
-          <div><span>Agentic scope</span><strong>Hypotheses 21 through 26</strong></div>
+          <div><span>Agentic scope</span><strong>Hypotheses 21 - 26</strong></div>
           <div><span>Strategy</span><strong>Coexist, do not replace</strong></div>
         </section>
 
@@ -134,13 +134,27 @@ function App() {
             <div><p className="eyebrow">Three workstreams</p><h2>One governance position. Three focused paths.</h2></div>
           </div>
           <div className="agenda-overview-grid">
-            {workstreams.map((item) => <a href={item.href} key={item.label}>
-              <span className="agenda-day-label"><CalendarDays size={16} />{item.label}</span>
-              <h3>{item.title}</h3><p>{item.detail}</p>
-              <small className="section-list-label">Sections inside</small>
-              <ol>{item.topics.map((topic, index) => <li key={topic}><span>{String(index + 1).padStart(2, '0')}</span>{topic}</li>)}</ol>
-              <strong>{item.action} <ArrowRight size={16} /></strong>
-            </a>)}
+            {workstreams.map((item, workstreamIndex) => workstreamIndex === 1 ? (
+              <details className="agenda-workstream-disclosure" open key={item.label}>
+                <summary>
+                  <span className="agenda-day-label"><CalendarDays size={16} />{item.label}</span>
+                  <h3>{item.title}</h3>
+                  <span className="agenda-card-toggle"><ChevronDown size={18} /><span className="when-closed">Expand</span><span className="when-open">Collapse</span></span>
+                </summary>
+                <div className="agenda-workstream-expanded">
+                  <p>{item.detail}</p>
+                  <small className="section-list-label">Sections inside</small>
+                  <ol>{item.topics.map((topic, index) => <li key={topic}><span>{String(index + 1).padStart(2, '0')}</span>{topic}</li>)}</ol>
+                  <a href={item.href}>{item.action} <ArrowRight size={16} /></a>
+                </div>
+              </details>
+            ) : <a href={item.href} key={item.label}>
+                <span className="agenda-day-label"><CalendarDays size={16} />{item.label}</span>
+                <h3>{item.title}</h3><p>{item.detail}</p>
+                <small className="section-list-label">Sections inside</small>
+                <ol>{item.topics.map((topic, index) => <li key={topic}><span>{String(index + 1).padStart(2, '0')}</span>{topic}</li>)}</ol>
+                <strong>{item.action} <ArrowRight size={16} /></strong>
+              </a>)}
           </div>
           <p className="section-footnote">Start with the platform governance model, then open a dedicated page for each implementation workstream. The linked pages hold the architecture, deployment guidance, proof criteria and sources without crowding this briefing.</p>
 
@@ -204,19 +218,12 @@ function App() {
         </section>
 
         <section className="section agent-proof-map" id="agent-hypotheses">
-          <details className="evidence-disclosure agent-proof-disclosure" open>
-            <summary>
-              <div><p className="eyebrow">Agent focus · hypotheses 21–26</p><h2>Every hypothesis has a surface, data path and proof.</h2></div>
-              <span className="evidence-toggle"><ChevronDown size={20} /><span className="when-closed">Expand hosted agents</span><span className="when-open">Collapse hosted agents</span></span>
-            </summary>
-            <div className="evidence-expanded">
-              <div className="hypothesis-map" role="table" aria-label="Agent hypothesis evidence map">
-                <div className="hypothesis-map-head" role="row"><span>Hypothesis</span><span>Test surface</span><span>Governed data path</span><span>Pass evidence</span></div>
-                {agentHypotheses.map(([number, title, surface, dataPath, proof]) => <a href={`./workshop.html#hypothesis-${number}`} role="row" key={number}><span><strong>#{number}</strong><small>{title}</small></span><span>{surface}</span><span>{dataPath}</span><span>{proof}<ArrowRight size={15} /></span></a>)}
-              </div>
-              <p className="section-footnote">This is the agent-specific slice of Round 2. Open any row for its scored definition, then use the workstream pages for architecture and implementation detail.</p>
-            </div>
-          </details>
+          <div className="evidence-heading"><div><p className="eyebrow">Agent focus · hypotheses 21 - 26</p><h2>Every hypothesis has a surface, data path and proof.</h2></div></div>
+          <div className="hypothesis-map" role="table" aria-label="Agent hypothesis evidence map">
+            <div className="hypothesis-map-head" role="row"><span>Hypothesis</span><span>Test surface</span><span>Governed data path</span><span>Pass evidence</span></div>
+            {agentHypotheses.map(([number, title, surface, dataPath, proof]) => <a href={`./workshop.html#hypothesis-${number}`} role="row" key={number}><span><strong>#{number}</strong><small>{title}</small></span><span>{surface}</span><span>{dataPath}</span><span>{proof}<ArrowRight size={15} /></span></a>)}
+          </div>
+          <p className="section-footnote">This is the agent-specific slice of Round 2. Open any row for its scored definition, then use the workstream pages for architecture and implementation detail.</p>
         </section>
 
         <section className="closing"><ShieldCheck size={24} /><div><p className="eyebrow">Governance standard</p><blockquote>Every agent is known, constrained, attributable, and authorized all the way to the data.</blockquote></div></section>
