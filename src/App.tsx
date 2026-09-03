@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import {
-  ArrowRight, Boxes, CalendarDays, Check, CircleAlert, ExternalLink,
+  ArrowRight, Boxes, CalendarDays, Check, ChevronDown, CircleAlert, ExternalLink,
   Fingerprint, GitBranch, Route, ShieldCheck,
 } from 'lucide-react'
 import './App.css'
@@ -30,6 +30,13 @@ const workstreams = [
     topics: ['A2A versus MCP boundaries', 'APIM gateway controls', 'Combined governed flow', 'Day 2 build sequence'],
     href: './protocols.html',
   },
+]
+
+const hackathonSteps = [
+  ['01', 'Host', 'Deploy Agent Framework code to Microsoft Foundry Agent Service.'],
+  ['02', 'Connect', 'Reach the Databricks interface through a governed remote MCP tool.'],
+  ['03', 'Preserve', 'Carry the signed-in user across the independent cross-tenant token hop.'],
+  ['04', 'Prove', 'Run one question as two users and capture different Unity Catalog-authorized rows.'],
 ]
 
 const architectureLayers = [
@@ -129,6 +136,7 @@ function App() {
             <p className="lede">The integrated Round 2 position for a DataLand and Microsoft ecosystem: read data in place, preserve source authorization, govern every agent interaction, and retain evidence from request to decision.</p>
             <div className="hero-actions">
               <a className="button primary" href="#evidence">Open the Round 2 evidence map <ArrowRight size={17} /></a>
+              <a className="button secondary" href="#hackathon">Open the hackathon build</a>
             </div>
           </div>
           <div className="hero-visual" aria-label="Governance layers diagram">
@@ -145,6 +153,28 @@ function App() {
           <div><span>Critical proof</span><strong>#22 · zero bypass</strong></div>
           <div><span>Agentic scope</span><strong>Hypotheses 21 through 26</strong></div>
           <div><span>Strategy</span><strong>Coexist, do not replace</strong></div>
+        </section>
+
+        <section className="hackathon-core" id="hackathon">
+          <details open>
+            <summary>
+              <div>
+                <p className="eyebrow">Actual hackathon · Day 1 core build</p>
+                <h2>Host the agent. <span>Keep authorization at source.</span></h2>
+                <p>Build a Foundry-hosted agent that reaches governed Databricks data as the signed-in user, then prove that Unity Catalog still makes the final authorization decision.</p>
+              </div>
+              <span className="hackathon-toggle"><ChevronDown size={20} /><span className="when-closed">Show build path</span><span className="when-open">Hide build path</span></span>
+            </summary>
+            <div className="hackathon-expanded">
+              <div className="hackathon-step-grid">
+                {hackathonSteps.map(([number, title, detail]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{detail}</p></article>)}
+              </div>
+              <div className="hackathon-proof">
+                <p><strong>Pass condition:</strong> the same question returns different permitted rows for two users, with the caller identity and source-side decision captured as evidence.</p>
+                <a className="button primary" href="./hosted-agents.html">Open the complete hosted-agent build <ArrowRight size={17} /></a>
+              </div>
+            </div>
+          </details>
         </section>
 
         <section className="section agenda-overview" id="workstreams">
