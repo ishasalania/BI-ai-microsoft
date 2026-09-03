@@ -97,6 +97,23 @@ const tests = [
   { id: 26, title: 'Per-user identity through MCP', state: 'Pre-test', surface: 'OAuth 2.1 / OBO · server-side denial', evidence: 'Mandatory pre-test · both agent surfaces', note: 'Validate token pass-through in both surfaces. Entra sign-in alone does not prove that the user token reached the server.', offering: 'Entra OBO and OAuth 2.1 token forwarding through Copilot Studio and Foundry. A server-side 403 must be returned unchanged, with no framework bypass.' },
 ]
 
+const agendaDays = [
+  {
+    day: 'Day 1',
+    title: 'Hosted agents and governed data',
+    detail: 'Move from the governance position into a Foundry-hosted agent that reaches Databricks under the signed-in user’s source permissions.',
+    topics: ['Governance frame', 'Hosted runtime', 'Cross-tenant data', 'Authorization evidence'],
+    href: './hosted-agents.html',
+  },
+  {
+    day: 'Day 2',
+    title: 'A2A and MCP interoperability',
+    detail: 'Separate agent delegation from tool connectivity, deploy both protocol paths, and close with one combined governed flow.',
+    topics: ['Protocol boundaries', 'MCP deployment', 'A2A deployment', 'Combined showcase'],
+    href: './protocols.html',
+  },
+]
+
 const accessHash = import.meta.env.VITE_ACCESS_HASH as string | undefined
 
 async function hashPassword(password: string) {
@@ -324,6 +341,21 @@ function App() {
             <article className="claim-confirmed"><span>Confirmed</span><h3>Governance gaps are real</h3><p>Collibra–Purview is “not achievable natively” for #5 and #6. All agentic hypotheses score security, permissions and governance, not answer quality.</p></article>
             <article className="claim-corrected"><span>Corrected</span><h3>Shortcuts do not carry identity</h3><p>For whole-path enforcement, Microsoft’s recorded answer is Snowflake Direct Query with SSO. That conflicts with the zero-copy shortcut architecture.</p></article>
             <article className="claim-unverified"><span>Evidence standard</span><h3>Document the exact path</h3><p>Record the user, surface, connector, token path, source-side authorization decision and result for every claimed pass or failure.</p></article>
+          </div>
+        </section>
+
+        <section className="section agenda-overview" id="agenda">
+          <div className="agenda-overview-heading">
+            <div><p className="eyebrow">AI track agenda topics</p><h2>Two focused days. Detail lives on separate pages.</h2></div>
+            <p>The governance position stays here. Each day opens into its own working page with architecture, deployment guidance, proof criteria and source links. Blocks are intentionally shown without fixed times.</p>
+          </div>
+          <div className="agenda-overview-grid">
+            {agendaDays.map((item) => <a href={item.href} key={item.day}>
+              <span className="agenda-day-label"><CalendarDays size={16} />{item.day}</span>
+              <h3>{item.title}</h3><p>{item.detail}</p>
+              <ol>{item.topics.map((topic, index) => <li key={topic}><span>{String(index + 1).padStart(2, '0')}</span>{topic}</li>)}</ol>
+              <strong>Open {item.day} <ArrowRight size={16} /></strong>
+            </a>)}
           </div>
         </section>
 

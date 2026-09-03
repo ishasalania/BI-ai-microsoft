@@ -11,6 +11,8 @@ export default defineConfig({
         main: 'index.html',
         workshop: 'workshop.html',
         fabricFoundry: 'fabric-foundry.html',
+          hostedAgents: 'hosted-agents.html',
+          protocols: 'protocols.html',
       },
     },
   },
