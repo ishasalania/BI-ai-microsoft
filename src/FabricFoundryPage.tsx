@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight, Bot, CalendarDays, Database, ExternalLink, FlaskConical, GitBranch, KeyRound, Layers3, ShieldCheck } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ArrowUpRight, Bot, CalendarDays, Database, ExternalLink, FileCheck2, FlaskConical, GitBranch, KeyRound, Layers3, ShieldCheck, Wrench } from 'lucide-react'
 import './index.css'
 import './App.css'
 
@@ -76,13 +76,24 @@ export default function FabricFoundryPage() {
         </section>
 
         <section className="section scenario-boundaries">
-          <div><p className="eyebrow">PoC guardrails</p><h2>Five boundaries to state before the demo.</h2></div>
+          <div><p className="eyebrow">PoC guardrails</p><h2>Seven boundaries to state before the demo.</h2></div>
           <div className="boundary-grid">
             <article><strong>Identity</strong><p>User authentication is required. Service principal authentication is not supported for this Fabric Data Agent integration.</p></article>
             <article><strong>Tenant and region</strong><p>The Foundry project and Fabric agent must share a tenant. The Fabric agent and its data sources need aligned capacity regions.</p></article>
             <article><strong>Structured data only</strong><p>Lakehouse files such as PDF, DOCX, CSV or JSON are not read directly. Expose structured data through selected tables.</p></article>
             <article><strong>Result size</strong><p>Fabric Data Agent is conversational, not a bulk export API. Responses are capped at 25 rows and 25 columns.</p></article>
             <article><strong>Governance maturity</strong><p>Warehouse DLP is GA, while several Purview interaction and access restriction controls remain preview.</p></article>
+            <article><strong>File ingestion</strong><p>Define extraction, malware scanning, supported formats, label preservation, chunk-level permissions, refresh and deletion before indexing any file. Parsed content must not lose its original access boundary.</p></article>
+            <article><strong>Connector contract</strong><p>Record the connector owner, authentication mode, delegated scopes, supported regions, throttling and source authorization behavior. Test the denied path, not only successful connection.</p></article>
+          </div>
+        </section>
+
+        <section className="section onelake-mcp">
+          <div className="detail-heading"><div><p className="eyebrow">OneLake and MCP</p><h2>Expose a capability, not an ungoverned data shortcut.</h2></div><p>The supported Fabric-tool pattern remains the primary scenario. If a team places a custom MCP server in front of OneLake-backed data, that server becomes an application boundary and must authenticate every request before the underlying data system authorizes it.</p></div>
+          <div className="onelake-path-grid">
+            <a href="https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/fabric" target="_blank" rel="noreferrer"><span><Layers3 /></span><h3>Fabric tool path</h3><p>Foundry connects to a published Fabric Data Agent. User context reaches Fabric through the supported connection, and Fabric permissions plus source controls determine the result.</p><strong className="card-link">Open Fabric tool <ExternalLink size={14} /></strong></a>
+            <a href="https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/mcp-authentication" target="_blank" rel="noreferrer"><span><Wrench /></span><h3>Custom MCP path</h3><p>The MCP server validates the caller or delegated token, limits tools and scopes, and calls OneLake or Fabric under an identity the source can authorize. APIM can enforce gateway policy, but source authorization remains mandatory.</p><strong className="card-link">Open MCP authentication <ExternalLink size={14} /></strong></a>
+            <a href="https://learn.microsoft.com/en-us/azure/search/search-document-level-access-overview" target="_blank" rel="noreferrer"><span><FileCheck2 /></span><h3>Search and files</h3><p>For Azure AI Search, propagate access groups and sensitivity context into query-time filtering. Search RBAC alone grants service access; it does not automatically reproduce every document permission or label decision.</p><strong className="card-link">Open document access <ExternalLink size={14} /></strong></a>
           </div>
         </section>
 

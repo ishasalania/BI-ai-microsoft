@@ -19,6 +19,10 @@ const actions = [
   ['Define the Agent 365 scope', 'Cover non-Microsoft registry depth, Agent SDK versus Graph API, tenant entitlement, and coexistence with ServiceNow.'],
   ['Confirm SETUP-0', 'Name the Fabric capacity, SKU, licences, tenant owner, tenant lifetime, participant accounts, and Entra federation.'],
   ['Confirm the 20-question set', 'SETUP-A must exist before the run. Three of the six hypotheses depend on it and cannot be scored without it.'],
+  ['Choose the identity propagation path', 'Document User Entra Token through Foundry Toolbox versus OAuth identity passthrough, including audience, scopes, consent, hosted-agent support and the downstream authorization owner.'],
+  ['Prove cross-tenant guest access', 'Invite both test identities into the data tenant where required, assign minimum data entitlements, obtain tenant-correct tokens and prove that a Tenant 1 token is never reused as a Tenant 2 credential.'],
+  ['Test session isolation', 'Run concurrent User A and User B sessions and prove that files, memory, tool outputs and credentials cannot cross the documented per-session VM-isolated sandbox boundary.'],
+  ['Set production quality gates', 'Name owners and thresholds for authorization failures, content safety, quality evaluations, latency, cost, drift, retention and rollback after prompts, tools, models or policies change.'],
 ]
 
 export default function WorkshopPage() {
@@ -62,7 +66,7 @@ export default function WorkshopPage() {
 
         <section className="section prep-plan">
           <div className="prep-plan-heading">
-            <div><p className="eyebrow">Evidence plan</p><h2>Eight decisions before Barcelona.</h2></div>
+            <div><p className="eyebrow">Evidence plan</p><h2>Twelve decisions before Barcelona.</h2></div>
             <div className="prep-progress"><div><strong>{completed.length} of {actions.length} ready</strong><span>Mark each decision as it is closed.</span></div><span className="progress-track"><span style={{ width: `${completed.length / actions.length * 100}%` }} /></span></div>
           </div>
           <div className="prep-checklist">{actions.map(([title, detail], index) => <article className={completed.includes(index) ? 'is-complete' : ''} key={title}><button type="button" onClick={() => toggleAction(index)} aria-pressed={completed.includes(index)} aria-label={`${completed.includes(index) ? 'Reopen' : 'Complete'} ${title}`}>{completed.includes(index) ? <Check size={17} /> : String(index + 1).padStart(2, '0')}</button><div><h3>{title}</h3><p>{detail}</p></div></article>)}</div>

@@ -80,11 +80,11 @@ const releaseReadiness = [
   },
   {
     name: 'Agent 365',
-    status: 'Frontier',
+    status: 'GA',
     hypotheses: 'Design discussion only',
-    claim: 'Treat Agent 365 as the management-plane architecture discussion requested by the customer, not as one of the 27 scored hypotheses.',
-    caveat: 'Public Foundry documentation states that Agent 365 MCP servers are limited to Frontier tenants. Confirm tenant entitlement and exact registry depth before making availability claims.',
-    href: 'https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/mcp-authentication',
+    claim: 'Agent 365 is generally available for the Commercial segment and provides observe, govern, and secure capabilities. It remains outside the 27 scored hypotheses.',
+    caveat: 'The product is GA, but Agent 365 MCP servers are still limited to Frontier tenants. Confirm licensing, tenant entitlement, and exact registry depth.',
+    href: 'https://learn.microsoft.com/en-us/microsoft-agent-365/overview',
   },
 ]
 
@@ -92,7 +92,7 @@ const tests = [
   { id: 21, title: 'Conversational analytics enforcement', state: 'Prove', surface: 'Copilot in Power BI · signed-in user', evidence: 'R1 inconclusive · achievable natively', note: 'Zero row, column or label violations across 20 fixed questions. This is the deliberate control for #24.', offering: 'Power BI Copilot over the governed semantic model, with DirectQuery and Snowflake SSO where identity must reach the source. Import mode is not the answer.' },
   { id: 22, title: 'Structured-data agent security', state: 'Critical', surface: 'Fabric Data Agent · governed semantic model', evidence: 'R1 failed · Microsoft challenges the result', note: 'Zero bypass. Entra OBO is mandatory; a service principal is an automatic fail. Attempt Snowflake direct, not Databricks.', offering: 'Fabric Data Agent constrained to Fabric-mediated tools, backed by a governed semantic model and Snowflake DirectQuery SSO. Prove user context before the demo starts.' },
   { id: 23, title: 'Document permissions and labels', state: 'Prove', surface: 'OneLake / SharePoint · Azure AI Search', evidence: 'R1 inconclusive · achievable natively', note: 'Zero unauthorized disclosure. Security trimming must happen at query time under delegated Entra identity.', offering: 'Purview-enabled Azure AI Search with query-time label enforcement and delegated Entra tokens. Use Copilot Studio or Foundry only when the end-user token reaches Search.' },
-  { id: 24, title: 'Full chain over virtualized data', state: 'Resolve', surface: 'Snowflake DirectQuery · SSO', evidence: 'Architecture conflict to resolve', note: 'Run the same 20 questions as #21. If #21 passes and this fails, virtualization is the fault line.', offering: 'Fabric semantic model with Snowflake DirectQuery and SSO, consumed by Power BI Copilot or Fabric Data Agent. OneLake shortcuts cannot enforce source identity end to end.' },
+  { id: 24, title: 'Full chain over virtualized data', state: 'Resolve', surface: 'Iceberg shortcut · governed semantic model', evidence: 'Architecture conflict to resolve', note: 'Run the same 20 questions as #21 over in-place Snowflake data. If #21 passes and this fails, virtualization is the fault line.', offering: 'Test the Apache Iceberg zero-copy path defined by the Round 2 deck. DirectQuery can be a fallback, but it bypasses this test object and cannot clear the hypothesis.' },
   { id: 25, title: 'External sources through MCP', state: 'Resolve', surface: 'Copilot Studio + AI Foundry · real source', evidence: 'Microsoft and customer scope conflict', note: 'Must read real Snowflake data without OneLake materialization. A connection walkthrough does not test the hypothesis.', offering: 'Native MCP connectivity in both Copilot Studio and Foundry, tested against the live Snowflake MCP server. Microsoft Agent Framework is the pro-code Foundry-only extension path.' },
   { id: 26, title: 'Per-user identity through MCP', state: 'Pre-test', surface: 'OAuth 2.1 / OBO · server-side denial', evidence: 'Mandatory pre-test · both agent surfaces', note: 'Validate token pass-through in both surfaces. Entra sign-in alone does not prove that the user token reached the server.', offering: 'Entra OBO and OAuth 2.1 token forwarding through Copilot Studio and Foundry. A server-side 403 must be returned unchanged, with no framework bypass.' },
 ]
@@ -122,6 +122,15 @@ const workstreams = [
     topics: ['Protocol boundaries', 'MCP deployment', 'A2A deployment', 'Combined showcase'],
     href: './protocols.html',
   },
+]
+
+const presentationHighlights = [
+  { source: 'Round 2 concepts · pp. 1–4', title: 'Iceberg is the test object', detail: 'A shortcut over an external Iceberg table is the zero-copy interoperability path. Mirroring creates a copy; DirectQuery is a valid fallback but bypasses the test object.', href: 'https://learn.microsoft.com/en-us/fabric/onelake/onelake-shortcuts' },
+  { source: 'Round 2 concepts · pp. 7–14', title: 'Refuse rather than leak', detail: 'RLS, CLS and labels must hold on every read path. If a rule cannot be applied, the safe result is no data, never an unfiltered response.', href: 'https://learn.microsoft.com/en-us/fabric/onelake/security/get-started-security' },
+  { source: 'Round 2 concepts · pp. 14–18', title: 'Labels have two jobs', detail: 'A label must prevent unauthorized retrieval and remain attached to the resulting answer. The deck tests OneLake-native documents and SharePoint documents reached through OneLake separately.', href: 'https://learn.microsoft.com/en-us/azure/search/search-query-sensitivity-labels' },
+  { source: 'Round 2 concepts · pp. 27–30', title: 'Test every MCP path', detail: 'Foundry Responses, Copilot Studio, and Teams or Microsoft 365 Copilot use different transports. Each path must read real Snowflake data and preserve the requesting user through the server-side 403.', href: 'https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/mcp-authentication' },
+  { source: 'Enterprise governance deck · slides 7–9', title: 'Governance must be structured', detail: 'The control plane covers identity, ownership, registry, authorization policy, risk, lifecycle, and revocation. Every capability carries purpose, owner, scope, dependencies, risk, and evidence.', href: 'https://learn.microsoft.com/en-us/microsoft-agent-365/overview' },
+  { source: 'Boehringer reference design · architecture options', title: 'Lead with coexistence', detail: 'Keep Snowflake as the system of record, read Gold in place, and run the agent and experience layers on Foundry and Fabric. Five human approval gates remain visible and auditable.', href: 'https://learn.microsoft.com/en-us/fabric/onelake/onelake-shortcuts' },
 ]
 
 const accessHash = import.meta.env.VITE_ACCESS_HASH as string | undefined
@@ -184,7 +193,7 @@ function App() {
         </a>
         <nav aria-label="Page sections">
           <a href="#workshop">Workshop</a><a href="#position">Position</a><a href="#security">Security proof</a>
-          <a href="#readiness">GA vs preview</a><a href="#tests">Hypotheses 21–26</a><a href="#workstreams">Workstreams</a>
+          <a href="#presentations">Presentation inputs</a><a href="#readiness">GA vs preview</a><a href="#tests">Hypotheses 21–26</a><a href="#workstreams">Workstreams</a>
         </nav>
         <span className="date-pill"><CalendarDays size={15} /> 8–10 Sep</span>
       </header>
@@ -210,7 +219,7 @@ function App() {
         </section>
 
         <section className="fact-strip" aria-label="Briefing facts">
-          <div><span>Agent 365 status</span><strong>Outside the 27 hypotheses</strong></div>
+          <div><span>Source basis</span><strong>3 presentation inputs</strong></div>
           <div><span>Critical proof</span><strong>#22 · zero bypass</strong></div>
           <div><span>Agentic scope</span><strong>Hypotheses 21 through 26</strong></div>
           <div><span>Non-negotiable</span><strong>No service principal</strong></div>
@@ -228,6 +237,16 @@ function App() {
               <ol>{item.topics.map((topic, index) => <li key={topic}><span>{String(index + 1).padStart(2, '0')}</span>{topic}</li>)}</ol>
               <strong>{item.action} <ArrowRight size={16} /></strong>
             </a>)}
+          </div>
+        </section>
+
+        <section className="section presentation-inputs" id="presentations">
+          <div className="presentation-heading">
+            <div><p className="eyebrow">From the actual presentations</p><h2>The deck defines the test. Documentation explains the mechanism.</h2></div>
+            <p>These positions come from the Round 2 concepts PDF, the enterprise agent-governance presentation, and the Boehringer Microsoft reference design. Open any box for the closest official implementation topic.</p>
+          </div>
+          <div className="presentation-grid">
+            {presentationHighlights.map((item) => <a href={item.href} target="_blank" rel="noreferrer" key={item.title}><small>{item.source}</small><h3>{item.title}</h3><p>{item.detail}</p><strong>Open official topic <ExternalLink size={14} /></strong></a>)}
           </div>
         </section>
 
@@ -268,25 +287,41 @@ function App() {
         <section className="section position" id="position">
           <div className="section-heading">
             <p className="eyebrow">The architecture position</p>
-            <h2>One governance story, two distinct control planes</h2>
-            <p>Do not present Agent 365 as a scored product demo. Use the discussion to define how management-time oversight and runtime enforcement work together.</p>
+            <h2>Two governance pillars. Three control surfaces.</h2>
+            <p>Agent 365 governs the estate, APIM governs runtime traffic, and each data system governs access to the data it owns. The design is complete only when all three decisions can be traced.</p>
           </div>
           <div className="plane-grid">
-            <article className="plane-card">
+            <a className="plane-card" href="https://learn.microsoft.com/en-us/microsoft-agent-365/overview" target="_blank" rel="noreferrer">
               <div className="card-top"><span className="icon-box"><Boxes /></span><span className="status">Design discussion</span></div>
               <p className="kicker">Management plane</p><h3>Agent 365</h3>
               <p>Inventory, lifecycle, ownership and governance signals across the agent estate.</p>
               <ul><li><Check /> Discover Microsoft-managed agents</li><li><Check /> Establish owners and lifecycle state</li><li><Check /> Discuss Graph API and Agent SDK depth</li><li><CircleAlert /> Test visibility limits for AWS and external agents</li></ul>
-            </article>
+              <strong className="card-link">Open Agent 365 overview <ExternalLink size={14} /></strong>
+            </a>
             <div className="plus" aria-hidden="true">+</div>
-            <article className="plane-card apim-card">
+            <a className="plane-card apim-card" href="https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities" target="_blank" rel="noreferrer">
               <div className="card-top"><span className="icon-box"><Route /></span><span className="status">Runtime enforcement</span></div>
               <p className="kicker">Traffic plane</p><h3>Azure API Management</h3>
               <p>Put enforceable controls on model, MCP and tool traffic at the point of use.</p>
               <ul><li><Check /> Authenticate agent and caller identity</li><li><Check /> Apply token, rate and cost limits</li><li><Check /> Route models and balance backends</li><li><Check /> Log policy decisions for audit</li></ul>
-            </article>
+              <strong className="card-link">Open APIM AI gateway <ExternalLink size={14} /></strong>
+            </a>
           </div>
           <div className="position-line"><GitBranch size={22} /><p><strong>Position to take:</strong> Agent 365 answers “what agents exist and who owns them?” APIM answers “what may this agent call, under whose identity, and under which policy?” Neither replaces end-to-end authorization at the data source.</p></div>
+          <div className="governance-pillars">
+            <a href="https://learn.microsoft.com/en-us/microsoft-agent-365/overview" target="_blank" rel="noreferrer">
+              <span className="icon-box"><Boxes /></span><p className="kicker">Pillar 01 · Agentic control plane</p><h3>Govern the agent and its traffic.</h3>
+              <p>Agent 365 supplies inventory, ownership, sensitivity context, lifecycle and monitoring. APIM applies a consistent runtime policy across models, MCP servers and agents built in different environments.</p>
+              <ul><li>Know which agents exist and who owns them</li><li>Apply content safety and security checks consistently</li><li>Route by model, priority, capacity and approved backend</li><li>Observe calls, policy decisions, cost and failures</li></ul>
+              <strong className="card-link">Agent 365 governance <ExternalLink size={14} /></strong>
+            </a>
+            <a href="https://learn.microsoft.com/en-us/purview/ai-microsoft-purview" target="_blank" rel="noreferrer">
+              <span className="icon-box"><Database /></span><p className="kicker">Pillar 02 · Data plane</p><h3>Authorize where the data is owned.</h3>
+              <p>Foundry, Agent Framework and the gateway can authenticate the caller and propagate identity. The authoritative data system must still evaluate roles, groups, sensitivity labels, row filters and tool permissions.</p>
+              <ul><li>Carry the user context without widening scope</li><li>Enforce RBAC, RLS, CLS, labels and access groups at source</li><li>Return source denials unchanged through every layer</li><li>Capture the source-side authorization decision as evidence</li></ul>
+              <strong className="card-link">Purview for AI <ExternalLink size={14} /></strong>
+            </a>
+          </div>
           <div className="governance-questions">
             <div className="question-heading"><p className="eyebrow">Questions to resolve in the room</p><h3>The honest boundary matters more than the marketing surface.</h3></div>
             <article><span>01</span><h4>How far does registry reach?</h4><p>For agents outside Microsoft, does sync expose names only or full posture, ownership and lifecycle state?</p></article>
@@ -302,9 +337,9 @@ function App() {
             <p>Azure AI Search support for Purview sensitivity labels is in preview. The architecture is valid only when the user’s delegated identity reaches query-time enforcement.</p>
           </div>
           <div className="security-grid">
-            <article className="security-card"><span className="step">01</span><LockKeyhole /><h3>Index with Purview enabled</h3><p>Use Blob Storage, ADLS Gen2, SharePoint or OneLake and create the index with <code>purviewEnabled: true</code>.</p><span className="preview-tag">REST 2026-08-01-preview</span></article>
-            <article className="security-card"><span className="step">02</span><KeyRound /><h3>Grant extraction rights</h3><p>The Search system-assigned managed identity needs <code>Content.SuperUser</code> and <code>UnifiedPolicy.Tenant.Read</code>.</p></article>
-            <article className="security-card accent-card"><span className="step">03</span><Fingerprint /><h3>Forward the user token</h3><p>Search RBAC and Purview label rights must both pass. Use delegated Entra identity and OBO, not a shared application identity.</p></article>
+            <a className="security-card" href="https://learn.microsoft.com/en-us/azure/search/search-indexer-sensitivity-labels" target="_blank" rel="noreferrer"><span className="step">01</span><LockKeyhole /><h3>Index with Purview enabled</h3><p>Use Blob Storage, ADLS Gen2, SharePoint or OneLake and create the index with <code>purviewEnabled: true</code>.</p><span className="preview-tag">REST 2026-08-01-preview</span></a>
+            <a className="security-card" href="https://learn.microsoft.com/en-us/azure/search/search-indexer-sensitivity-labels" target="_blank" rel="noreferrer"><span className="step">02</span><KeyRound /><h3>Grant extraction rights</h3><p>The Search system-assigned managed identity needs <code>Content.SuperUser</code> and <code>UnifiedPolicy.Tenant.Read</code>.</p></a>
+            <a className="security-card accent-card" href="https://learn.microsoft.com/en-us/azure/search/search-query-sensitivity-labels" target="_blank" rel="noreferrer"><span className="step">03</span><Fingerprint /><h3>Forward the user token</h3><p>Search RBAC and Purview label rights must both pass. Use delegated Entra identity and OBO, not a shared application identity.</p></a>
           </div>
           <div className="outcome-panel">
             <div className="outcome-intro"><span className="icon-box"><BadgeCheck /></span><div><p className="kicker">Query outcomes</p><h3>Identity decides the result set</h3></div></div>
@@ -317,13 +352,14 @@ function App() {
             </div>
           </div>
           <div className="warning"><CircleAlert /><p><strong>The failure mode:</strong> a standard Foundry Search connection normally uses the project managed identity or an API key. The project identity grants application access; it does not represent the end user. Without OBO or label-aware Foundry IQ retrieval, labeled documents are omitted. If decrypted content is copied into an ordinary index, the original Purview label no longer protects that copy.</p></div>
+          <div className="auth-contract"><KeyRound /><div><p className="kicker">Authentication is not authorization</p><h3>Foundry establishes identity. The data system decides access.</h3><p>Before an agent is exposed to users, prove that it supports user-based access control end to end. A successful sign-in or tool connection is not a pass unless the user token, narrowed scopes and source entitlements produce the expected filtered result or denial.</p></div></div>
           <div className="source-list"><span>Microsoft sources</span>{sources.map(([label, href]) => <a href={href} target="_blank" rel="noreferrer" key={href}>{label}<ExternalLink size={14} /></a>)}</div>
         </section>
 
         <section className="section readiness" id="readiness">
           <div className="readiness-heading">
             <div>
-              <p className="eyebrow">Release readiness · checked 2 Sep 2026</p>
+              <p className="eyebrow">Release readiness · checked 3 Sep 2026</p>
               <h2>GA is not inherited by every feature inside a product.</h2>
             </div>
             <div className="status-definitions">
@@ -364,7 +400,7 @@ function App() {
           <div className="section-heading"><p className="eyebrow">Claim discipline</p><h2>Say what is verified. Flag what is not.</h2><p>Round 1 showed why every conclusion needs an agreed test, source evidence and precise wording. Precision is part of the governance posture.</p></div>
           <div className="claims-grid">
             <article className="claim-confirmed"><span>Confirmed</span><h3>Governance gaps are real</h3><p>Collibra–Purview is “not achievable natively” for #5 and #6. All agentic hypotheses score security, permissions and governance, not answer quality.</p></article>
-            <article className="claim-corrected"><span>Corrected</span><h3>Shortcuts do not carry identity</h3><p>For whole-path enforcement, Microsoft’s recorded answer is Snowflake Direct Query with SSO. That conflicts with the zero-copy shortcut architecture.</p></article>
+            <article className="claim-corrected"><span>Corrected from the deck</span><h3>DirectQuery does not test Iceberg</h3><p>DirectQuery is a valid fallback and keeps enforcement in Snowflake, but the Round 2 presentation explicitly defines the test object as Apache Iceberg zero-copy virtualization. A DirectQuery result cannot clear that hypothesis.</p></article>
             <article className="claim-unverified"><span>Evidence standard</span><h3>Document the exact path</h3><p>Record the user, surface, connector, token path, source-side authorization decision and result for every claimed pass or failure.</p></article>
           </div>
         </section>
@@ -374,7 +410,7 @@ function App() {
             <p className="eyebrow">Workshop preparation</p>
             <h2>Take the evidence plan into a focused workspace.</h2>
           </div>
-          <p>The architecture brief ends here. The separate preparation page holds the eight decisions, proof priorities, and an official Microsoft Foundry hosted-agent repository for the workshop build.</p>
+          <p>The architecture brief ends here. The separate preparation page holds the twelve decisions, proof priorities, and an official Microsoft Foundry hosted-agent repository for the workshop build.</p>
           <div className="handoff-actions"><a className="button primary" href="./workshop.html">Open workshop prep <ArrowRight size={17} /></a><a className="scenario-link" href="./fabric-foundry.html">View Fabric + Foundry scenario</a></div>
         </section>
 
